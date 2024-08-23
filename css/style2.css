@@ -1,0 +1,221 @@
+.table{
+	font-family: century gothic;
+	width: 70%;
+}
+
+.button{
+	margin-left: 22.5%;
+	font-family: century gothic;
+	border: none;
+	background-color: deepskyblue;
+	color: black;
+	height: 33px;
+	width: 130px;
+}
+
+.button:hover{
+	background-color: blue;
+	color: white;
+	transition: .5s;
+}
+
+.search{
+	float: right;
+	height: 33px;
+	width: 100px;
+	border: none;
+	right: 103px;
+	top: 212px;
+	position: absolute;
+	background-color: seagreen;
+	color: white;
+}
+
+.search:hover{
+	background-color: green;
+	color: black;
+	transition: .5s;
+}
+
+.textbox{
+	position: absolute;
+	top: 212px;
+	right: 205px;
+	height: 27px;
+	font-family: century gothic;
+	width: 200px;
+}
+
+.modal{
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 60px;
+}
+
+.modal-content{
+	background-color: #fefefe;
+	margin: 10px auto;
+	border: 1px solid #888;
+	width: 60%;
+}
+
+.animate{
+	-webkit-animation: animatezoom 0.6s;
+	animation: animatezoom 0.6s;
+}
+
+.imgcontainer{
+	text-align: center;
+	margin: 24px 0 12px 0;
+	position: relative;
+}
+
+.close{
+	position: absolute;
+	right: 25px;
+	top: 0;
+	color: #000;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus{
+	color: red;
+	cursor: pointer;
+}
+
+.container1{
+	margin-left: 7.4%;
+}
+
+span.psw{
+	float: right;
+	padding-top: 16px;
+}
+
+.textbox1{
+	width: 15%;
+	height: 25px;
+	font-family: century gothic;
+}
+
+.container1 label{
+	font-family: century gothic;
+}
+
+select, option{
+	font-family: century gothic;
+	height: 30.5px;
+	width: 20%;
+}
+
+.container-update{
+	width: 84%;
+	height: 250px;
+	margin-left: 15.5%;
+	margin-top: 10px;
+	position: relative;
+}
+
+.container-update h1{
+	font-family: century gothic;
+	margin-top: 0;
+}
+
+.content-update{
+	width: 70%;
+	margin: 20px auto;
+}
+
+.content-update label{
+	font-family: century gothic;
+}
+
+.content-update input[type=text]{
+	height: 25px;
+	width: 20%;
+	font-family: century gothic;
+}
+
+.container-update h2{
+	font-family: century gothic;
+	margin-top: 0;
+}
+
+.container-update input[type=submit]{
+	background-color: limegreen;
+	height: 30px;
+	border: none;
+	font-family: century gothic;
+}
+
+.container-update input[type=submit]:hover{
+	background-color: darkgreen;
+	color: white;
+	transition: .5s;
+}
+
+.container-update a{
+	text-transform: uppercase;
+	text-decoration: none;
+	color: black;
+	background-color: orangered;
+	padding: .6% 4%;
+	font-family: century gothic;
+}
+
+.container-update a:hover{
+	background-color: darkred;
+	color: white;
+	transition: .5s;
+}
+
+.delete-container{
+	width: 85%;
+	margin-left: 15%;
+	background-color: red;
+	margin-top: 150px;
+	padding: 50px 0;
+}
+
+.delete-container h1{
+	font-family: century gothic;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.delete-container input[type=submit]{
+	background-color: limegreen;
+	height: 30px;
+	border: none;
+	font-family: century gothic;
+}
+
+.delete-container input[type=submit]:hover{
+	background-color: darkgreen;
+	color: white;
+	transition: .5s;
+}
+
+.delete-container a{
+	text-transform: uppercase;
+	text-decoration: none;
+	color: black;
+	background-color: white;
+	padding: .4% 1%;
+	font-family: century gothic;
+}
+
+.delete-container a:hover{
+	background-color: black;
+	color: white;
+	transition: .5s;
+}

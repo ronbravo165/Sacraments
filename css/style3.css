@@ -1,0 +1,13 @@
+.button-add{
+	background-color: deepskyblue;
+	color: black;
+	border: none;
+	margin-right: 55px;
+	padding: 10px;
+}
+
+.button-add:hover{
+	color: white;
+	background-color: blue;
+	transition: .5s;
+}
