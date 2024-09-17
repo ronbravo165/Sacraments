@@ -22,22 +22,22 @@ while ($row = mysqli_fetch_array($result)) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link href="bootstrap.min.css" rel="stylesheet" type='text/css'>
 	<link rel="icon" type="image/png" href="images/logo.png">
 	<link rel="stylesheet" type="text/css" href="css/heading.css">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="fonts/font-awesome.min.css" rel="stylesheet" type='text/css'>
 	<!-- Data Table CSS -->
-	<link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+	<link rel='stylesheet' href='dataTables.bootstrap5.min.css'>
+	<script src="bootstrap.bundle.min.js" ></script>
+	<script src="popper.min.js"></script>
+	<script src="bootstrap.min.js"></script>
 	
 	<!-- jQuery -->
-	<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+	<script src='jquery-3.7.0.js'></script>
 	<!-- Data Table JS -->
-	<script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
-	<script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
-	<script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+	<script src='jquery.dataTables.min.js'></script>
+	<script src='dataTables.responsive.min.js'></script>
+	<script src='dataTables.bootstrap5.min.js'></script>
 	<title>SRS - Requests</title>
 </head>
 <body>
@@ -48,31 +48,31 @@ while ($row = mysqli_fetch_array($result)) {
 	<!-- The sidebar -->
 	<div class="container-fluid">
 		<div class="row flex-nowrap">
-			<div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 250px;"> 
+			<div id="menu" class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 250px;"> 
 				<ul class="nav nav-pills flex-column mb-auto"> 
-					<li class="nav-item"> 
+					<li > 
 						<a href="home.php" class="nav-link text-white" aria-current="page"> <i class="fa fa-home"></i><span class="ms-2">Home</span> </a> 
 					</li> 
 					<li>
-						<a href="#" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Baptism</span> </a> 
+						<a href="baptism.php" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Baptism</span> </a> 
 					</li>
 					<li>
-						<a href="#" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Communion</span> </a> 
+						<a href="communion.php" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Communion</span> </a> 
 					</li> 
 					<li> 
-						<a href="#" class="nav-link text-white"> <i class="fa fa-cog"></i><span class="ms-2">Confirmation</span> </a> 
+						<a href="confirmation.php" class="nav-link text-white"> <i class="fa fa-cog"></i><span class="ms-2">Confirmation</span> </a> 
 					</li> 
 					<li> 
-						<a href="#" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Wedding</span> </a> 
+						<a href="wedding.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Wedding</span> </a> 
 					</li>
 					<li> 
-						<a href="#" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Deceased</span> </a> 
+						<a href="deceased.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Deceased</span> </a> 
 					</li> 
-					<li> 
-						<a href="#" class="nav-link active"> <i class="fa fa-bookmark"></i><span class="ms-2">Request</span> </a> 
+					<li class="active"> 
+						<a href="requests.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Request</span> </a> 
 					</li>
 					<li> 
-						<a href="#" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">User Lists</span> </a> 
+						<a href="user.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">User Lists</span> </a> 
 					</li>
 				</ul> <hr> 
 			</div>

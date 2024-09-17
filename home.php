@@ -41,7 +41,7 @@ while ($row = mysqli_fetch_array($result)) {
 	<!-- Data Table JS -->
 	<script src='jquery.dataTables.min.js'></script>
 	<script src='dataTables.responsive.min.js'></script>
-	<script src=dataTables.bootstrap5.min.js'></script>
+	<script src='dataTables.bootstrap5.min.js'></script>
 	<title>SRS - Home</title>
 </head>
 <body>
@@ -50,8 +50,34 @@ while ($row = mysqli_fetch_array($result)) {
 	?>
 	<div class="container-fluid">
 		<div class="row flex-nowrap">
-			<?php include 'navbar.php';
-			?>
+		<div id="menu" class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 250px;"> 
+				<ul class="nav nav-pills flex-column mb-auto"> 
+					<li class="active"> 
+						<a href="home.php" class="nav-link text-white" aria-current="page"> <i class="fa fa-home"></i><span class="ms-2">Home</span> </a> 
+					</li> 
+					<li>
+						<a href="baptism.php" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Baptism</span> </a> 
+					</li>
+					<li>
+						<a href="communion.php" class="nav-link text-white"> <i class="fa fa-first-order"></i><span class="ms-2">Communion</span> </a> 
+					</li> 
+					<li> 
+						<a href="confirmation.php" class="nav-link text-white"> <i class="fa fa-cog"></i><span class="ms-2">Confirmation</span> </a> 
+					</li> 
+					<li> 
+						<a href="wedding.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Wedding</span> </a> 
+					</li>
+					<li> 
+						<a href="deceased.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Deceased</span> </a> 
+					</li> 
+					<li > 
+						<a href="requests.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">Request</span> </a> 
+					</li>
+					<li> 
+						<a href="user.php" class="nav-link text-white"> <i class="fa fa-bookmark"></i><span class="ms-2">User Lists</span> </a> 
+					</li>
+				</ul> <hr> 
+			</div>
 			<div class="col py-3">
 				<div class="container">
 					<div class="m-t-80">
@@ -146,13 +172,13 @@ while ($row = mysqli_fetch_array($result)) {
 			</div>	
 		</div>
 
-		<footer style="width: 100%; font-family: arial narrow; position: fixed; bottom: 0; margin-bottom: 0; background-color: white;">
-
-			<p align="center">Diocese of San Jose Nueva Ecija<br>Parokya ni San Nicolas de Tolentino<br>Carranglan, Nueva Ecija<br>&copy; All rights reserved 2024.</p>
 		
-		</footer>
 	</div>	
 	
+	<footer style="width: 100%; font-family: arial narrow; position: fixed; bottom: 0; margin-bottom: 0; background-color: white;">
 
+		<p align="center">Diocese of San Jose Nueva Ecija<br>Parokya ni San Nicolas de Tolentino<br>Carranglan, Nueva Ecija<br>&copy; All rights reserved 2024.</p>
+	
+	</footer>
 </body>
 </html>

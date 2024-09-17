@@ -6,12 +6,12 @@
         </a>
         <div class="container">
             <div class="row">
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <h1 class="heading1">Sacramental Record System</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <h3 class="heading2">Parokya ni San Nicolas de Tolentino</h3>
                 </div>
             </div>
