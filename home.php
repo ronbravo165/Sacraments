@@ -46,8 +46,7 @@ while ($row = mysqli_fetch_array($result)) {
 </head>
 <body>
 	<?php include 'connection.php'; ?>
-	<?php include 'topbar.php';
-	?>
+	<?php include 'topbar.php'; ?>
 	<div class="container-fluid">
 		<div class="row flex-nowrap">
 		<div id="menu" class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 250px;"> 
@@ -83,7 +82,7 @@ while ($row = mysqli_fetch_array($result)) {
 					<div class="m-t-80">
 						<div class="row">
 							<div class="col-lg-4">
-								<div class="card" style="width: 18rem;">
+								<div class="card text-bg-warning mb-3" style="max-width: 18rem;">
 								
 									<div class="card-body text-center">
 										<h5 class="card-title">Baptism</h5>
@@ -98,7 +97,7 @@ while ($row = mysqli_fetch_array($result)) {
 								</div>
 							</div>
 							<div class="col-lg-4">
-								<div class="card" style="width: 18rem;">
+								<div  class="card text-bg-info mb-3" style="max-width: 18rem;">
 								
 									<div class="card-body text-center">
 										<h5 class="card-title">Confirmation</h5>
@@ -114,7 +113,7 @@ while ($row = mysqli_fetch_array($result)) {
 								</div>
 							</div>
 							<div class="col-lg-4">
-								<div class="card" style="width: 18rem;">
+								<div class="card text-bg-light mb-3" style="max-width: 18rem;">
 								
 									<div class="card-body text-center">
 										<h5 class="card-title">Communion</h5>
@@ -134,7 +133,7 @@ while ($row = mysqli_fetch_array($result)) {
 					
 						<div class="row">
 							<div class="col-lg-4">
-								<div class="card" style="width: 18rem;">
+								<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
 								
 									<div class="card-body text-center">
 										<h5 class="card-title">Wedding</h5>
@@ -149,7 +148,7 @@ while ($row = mysqli_fetch_array($result)) {
 								</div>
 							</div>
 							<div class="col-lg-4">
-								<div class="card" style="width: 18rem;">
+								<div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
 								
 									<div class="card-body text-center">
 										<h5 class="card-title">Deceased</h5>
