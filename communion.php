@@ -273,55 +273,55 @@ while ($row = mysqli_fetch_array($result)) {
 
 				<div class="clear-fix">&nbsp;</div>
 				<table id="example" class="table table-striped example" style="width:100%">
-								<thead>
-									<tr>
-										<td>Baby's full name</td>
-										<td>Father</td>
-										<td>Mother</td>
-										<td>Birth Date</td>
-										<td>Birth Place</td>
-										<td>Communion Date</td>
-										<td>Communion Time</td>
-										<td>Priest</td>
-										<td>Action</td>
-									</tr>
-								</thead>
-								
-								<tbody>
-									<?php include 'connection.php';
-											$result = mysqli_query($con,"SELECT * FROM communion_tbl"); 
-											while ($row = $result->fetch_assoc()):
-									?>
-									<tr>
-										<td><?php echo $row['fullname']; ?></td>
-										<td><?php echo $row['father']; ?></td>
-										<td><?php echo $row['mother']; ?></td>
-										<td><?php echo $row['birthdate']; ?></td>
-										<td><?php echo $row['birthplace']; ?></td>
-										<td><?php echo $row['comdate']; ?></td>
-										<td><?php echo $row['comtime']; ?></td>
-										<td><?php echo $row['priest']; ?></td>
-										<td>
-										<ul class="list-inline m-0">
-                                                <li class="list-inline-item">
-                                                    <button class="btn btn-primary btn-sm rounded-0" type="button" title="Add"><i class="fa fa-table"></i></button>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
-                                                </li>
-                                            </ul>
-											<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
-										
-										</td>
-									</tr>
+					<thead>
+						<tr>
+							<td>Full name</td>
+							<td>Father</td>
+							<td>Mother</td>
+							<td>Birth Date</td>
+							<td>Birth Place</td>
+							<td>Communion Date</td>
+							<td>Communion Time</td>
+							<td>Priest</td>
+							<td>Action</td>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<?php include 'connection.php';
+								$result = mysqli_query($con,"SELECT * FROM communion_tbl"); 
+								while ($row = $result->fetch_assoc()):
+						?>
+						<tr>
+							<td><?php echo $row['fullname']; ?></td>
+							<td><?php echo $row['father']; ?></td>
+							<td><?php echo $row['mother']; ?></td>
+							<td><?php echo $row['birthdate']; ?></td>
+							<td><?php echo $row['birthplace']; ?></td>
+							<td><?php echo $row['comdate']; ?></td>
+							<td><?php echo $row['comtime']; ?></td>
+							<td><?php echo $row['priest']; ?></td>
+							<td>
+							<ul class="list-inline m-0">
+									<li class="list-inline-item">
+										<button class="btn btn-primary btn-sm rounded-0" type="button" title="Add"><i class="fa fa-table"></i></button>
+									</li>
+									<li class="list-inline-item">
+										<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
+									</li>
+									<li class="list-inline-item">
+										<a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
+									</li>
+								</ul>
+								<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
+							
+							</td>
+						</tr>
 
-									<?php endwhile; ?>
-								</tbody>
-								
-							</table>
+						<?php endwhile; ?>
+					</tbody>
+					
+				</table>
 			</div>
 		</div>
 	</div>
