@@ -300,7 +300,21 @@ if (isset($_POST['add'])) {
 										<td><?php echo $row['baptismalDate']; ?></td>
 										<td><?php echo $row['baptismalTime']; ?></td>
 										<td><?php echo $row['priest']; ?></td>
-										<td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td>
+										<td>
+										<ul class="list-inline m-0">
+                                                <li class="list-inline-item">
+                                                    <button class="btn btn-primary btn-sm rounded-0" type="button" title="Add"><i class="fa fa-table"></i></button>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
+                                                </li>
+                                            </ul>
+											<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
+										
+										</td>
 									</tr>
 
 									<?php endwhile; ?>
@@ -310,7 +324,7 @@ if (isset($_POST['add'])) {
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 <script>
 	$(function(){
@@ -319,29 +333,29 @@ if (isset($_POST['add'])) {
 	});
 
 	$(document).ready(function() {
-    $('.example').DataTable({
-      //disable sorting on last column
-      "columnDefs": [
-        { "orderable": false, "targets": 7 }
-      ],
-      language: {
-        //customize pagination prev and next buttons: use arrows instead of words
-        'paginate': {
-          'previous': '<span class="fa fa-chevron-left"></span>',
-          'next': '<span class="fa fa-chevron-right"></span>'
-        },
-        //customize number of elements to be displayed
-        "lengthMenu": 'Display <select class="form-control input-sm">'+
-        '<option value="10">10</option>'+
-        '<option value="20">20</option>'+
-        '<option value="30">30</option>'+
-        '<option value="40">40</option>'+
-        '<option value="50">50</option>'+
-        '<option value="-1">All</option>'+
-        '</select> results'
-      }
-    })  
-} );
+		$('.example').DataTable({
+		//disable sorting on last column
+		"columnDefs": [
+			{ "orderable": false, "targets": 7 }
+		],
+		language: {
+			//customize pagination prev and next buttons: use arrows instead of words
+			'paginate': {
+			'previous': '<span class="fa fa-chevron-left"></span>',
+			'next': '<span class="fa fa-chevron-right"></span>'
+			},
+			//customize number of elements to be displayed
+			"lengthMenu": 'Display <select class="form-control input-sm">'+
+			'<option value="10">10</option>'+
+			'<option value="20">20</option>'+
+			'<option value="30">30</option>'+
+			'<option value="40">40</option>'+
+			'<option value="50">50</option>'+
+			'<option value="-1">All</option>'+
+			'</select> results'
+		}
+		})  
+	});
 </script>
 </html>
 
