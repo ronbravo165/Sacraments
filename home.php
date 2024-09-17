@@ -18,217 +18,141 @@ while ($row = mysqli_fetch_array($result)) {
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		.m-t-80 {
+			margin-top: 80px;
+		}
+	</style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link href="bootstrap.min.css" rel="stylesheet" type='text/css'>
 	<link rel="icon" type="image/png" href="images/logo.png">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/heading.css">
+	<link href="fonts/font-awesome.min.css" rel="stylesheet" type='text/css'>
+	<!-- Data Table CSS -->
+	<link rel='stylesheet' href='dataTables.bootstrap5.min.css'>
+	<script src="bootstrap.bundle.min.js" ></script>
+	<script src="popper.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src='jquery-3.7.0.js'></script>
+	<!-- Data Table JS -->
+	<script src='jquery.dataTables.min.js'></script>
+	<script src='dataTables.responsive.min.js'></script>
+	<script src=dataTables.bootstrap5.min.js'></script>
 	<title>SRS - Home</title>
 </head>
 <body>
+	<?php include 'connection.php'; ?>
+	<?php include 'topbar.php';
+	?>
+	<div class="container-fluid">
+		<div class="row flex-nowrap">
+			<?php include 'navbar.php';
+			?>
+			<div class="col py-3">
+				<div class="container">
+					<div class="m-t-80">
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="card" style="width: 18rem;">
+								
+									<div class="card-body text-center">
+										<h5 class="card-title">Baptism</h5>
+										<h1 align="center" style="font-size: 60px;">
+											<?php
+												$query = mysqli_query($con,"SELECT * from baptism_tbl");
 
-	<div class="header">
-		<img src="images/logo.png">
-		<h1>Sacramental Record System</h1>
-		<h3>Parokya ni San Nicolas de Tolentino</h3>
-	</div>
+												echo mysqli_num_rows($query);
+											?>
+										</h1>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="card" style="width: 18rem;">
+								
+									<div class="card-body text-center">
+										<h5 class="card-title">Confirmation</h5>
+										<h1 align="center" style="font-size: 60px;">
+											<?php
+												$query = mysqli_query($con,"SELECT * from confirmation_tbl");
 
-	<ul>
-		<li><a href="#" class="nav-menu" style="background-color: gold;"></a></li>
-		<li><a href="home.php" class="nav-menu active">Home</a></li>
-		<li><a href="baptism.php" class="nav-menu">Baptism</a></li>
-		<li><a href="communion.php" class="nav-menu">Communion</a></li>
-		<li><a href="confirmation.php" class="nav-menu">Confirmation</a></li>
-		<li><a href="wedding.php" class="nav-menu">Wedding</a></li>
-		<li><a href="deceased.php" class="nav-menu">Deceased</a></li>
-		<li><a href="requests.php" class="nav-menu">Requests</a></li>
-		<li><a href="user.php" class="nav-menu">User Lists</a></li>
-		<li><a href="logout.php" class="nav-menu" style="color: red">LOGOUT</a></li>
-	</ul>
+												echo mysqli_num_rows($query);
+							
+											?>
+										</h1>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="card" style="width: 18rem;">
+								
+									<div class="card-body text-center">
+										<h5 class="card-title">Communion</h5>
+										<h1 align="center" style="font-size: 60px;">
+											<?php
+												$query = mysqli_query($con,"SELECT * from communion_tbl");
 
-	<table>
-		<tr>
-			<td colspan="6"><h1 align="center" style="font-family: century gothic;">Reports (Sacramental Records)</h1></td>
-		</tr>
-		<tr>
-			<td>
-				<div class="container"><br><br><br>
-					<h1 align="center" style="font-size: 60px;">
-						
-						<?php
+												echo mysqli_num_rows($query);
+											?>
+										</h1>
+									</div>
+								</div>
+							</div>
+						</div>
 
-							include 'connection.php';
+						<div class="clear-fix">&nbsp;</div>
+					
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="card" style="width: 18rem;">
+								
+									<div class="card-body text-center">
+										<h5 class="card-title">Wedding</h5>
+										<h1 align="center" style="font-size: 60px;">
+											<?php
+												$query = mysqli_query($con,"SELECT * from wedding_tbl");
 
-							$query = mysqli_query($con,"SELECT * from baptism_tbl");
+												echo mysqli_num_rows($query);
+											?>
+										</h1>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="card" style="width: 18rem;">
+								
+									<div class="card-body text-center">
+										<h5 class="card-title">Deceased</h5>
+										<h1 align="center" style="font-size: 60px;">
+											<h1 align="center" style="font-size: 60px;">
+											<?php
+											$query = mysqli_query($con,"SELECT * from deceased_tbl");
 
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</h1><br><br><br><br>
-					<p align="center">Baptism</p>
+											echo mysqli_num_rows($query);
+											?>
+										</h1>
+										</h1>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
 				</div>
-			</td>
+			</div>	
+		</div>
 
-			<td>
-				<div class="container"><br><br><br>
-					<h1 align="center" style="font-size: 60px;">
-						
-						<?php
+		<footer style="width: 100%; font-family: arial narrow; position: fixed; bottom: 0; margin-bottom: 0; background-color: white;">
 
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from confirmation_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</h1><br><br><br><br>
-					<p align="center">Confirmation</p>
-				</div>
-			</td>
-
-			<td>
-				<div class="container"><br><br><br>
-					<h1 align="center" style="font-size: 60px;">
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from communion_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</h1><br><br><br><br>
-					<p align="center">Communion</p>
-				</div>
-			</td>
-
-			<td>
-				<div class="container"><br><br><br>
-					<h1 align="center" style="font-size: 60px;">
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from wedding_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</h1><br><br><br><br>
-					<p align="center">Wedding</p>
-				</div>
-			</td>
-
-			<td>
-				<div class="container"><br><br><br>
-					<h1 align="center" style="font-size: 60px;">
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from deceased_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</h1><br><br><br><br>
-					<p align="center">Deceased</p>
-				</div>
-			</td>
-
-			<td>
-				<div class="container"><br><br><br>
-					<p style="margin-left: 10px;">Baptismal - 
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from baprequest_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</p>
-
-					<p style="margin-left: 10px;">Confirmation - 
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from conrequest_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</p>
-
-					<p style="margin-left: 10px;">Communion - 
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from comrequest_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</p>
-
-					<p style="margin-left: 10px;">Wedding - 
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from wedrequest_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</p>
-
-					<p style="margin-left: 10px;">Deceased - 
-						
-						<?php
-
-							include 'connection.php';
-
-							$query = mysqli_query($con,"SELECT * from decrequest_tbl");
-
-							echo mysqli_num_rows($query);
-
-						?>
-
-					</p>
-
-					<br><br>
-					<p align="center" style="margin-top: 6px;">Requests</p>
-				</div>
-			</td>			
-		</tr>
-	</table>
-
-	<footer style="width: 85%; margin-left: 15%; font-family: arial narrow; position: fixed; bottom: 0; margin-bottom: 0; background-color: white;">
-
-		<p align="center">Diocese of San Jose Nueva Ecija<br>Parokya ni San Nicolas de Tolentino<br>Carranglan, Nueva Ecija<br>&copy; All rights reserved 2024.</p>
+			<p align="center">Diocese of San Jose Nueva Ecija<br>Parokya ni San Nicolas de Tolentino<br>Carranglan, Nueva Ecija<br>&copy; All rights reserved 2024.</p>
 		
-	</footer>
+		</footer>
+	</div>	
+	
 
 </body>
 </html>
