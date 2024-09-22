@@ -109,7 +109,7 @@ if (isset($_POST['add'])) {
 					<span class="btn-label"><i class="fa fa-plus"></i></span> Add Record</button>
 				</div>
 				
-				<!-- Modal -->
+				<!-- Add Modal -->
 				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
 						<div class="modal-content" >
@@ -301,23 +301,182 @@ if (isset($_POST['add'])) {
 										<td><?php echo $row['baptismalTime']; ?></td>
 										<td><?php echo $row['priest']; ?></td>
 										<td>
-										<ul class="list-inline m-0">
-                                                <li class="list-inline-item">
-                                                    <button class="btn btn-primary btn-sm rounded-0" type="button" title="Add"><i class="fa fa-table"></i></button>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
-                                                </li>
-                                            </ul>
+											<ul class="list-inline m-0">
+												<li class="list-inline-item">
+													<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+												</li>
+												<li class="list-inline-item">
+													<a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
+												</li>	
+											</ul>
 											<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
 										
 										</td>
 									</tr>
+									
+									<!-- View Modal -->
+									<div class="modal fade" id="updateModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl">
+											<div class="modal-content" >
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="updateModalLabel">Baptismal Form </h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+													<form class="modal-content animate" method="post">
+														<div class="modal-body">
+															
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Book No.</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="bn" class="form-control" id="bn" value="<?php echo $row['bn'] ?>">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Page No.</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="pn" class="form-control" id="pn" value="<?php echo $row['pn'] ?>">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Line No.</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="ln" class="form-control" id="ln" value="<?php echo $row['ln'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Full Name</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="fullname" class="form-control" id="fullname" value="<?php echo $row['fullname'] ?>">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Birth Date</label>
+																		<div class="col-sm-9">
+																		<input type="text" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $row['birthdate'] ?>"></p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Birth Place</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="birthPlace" class="form-control" id="birthPlace" value="<?php echo $row['birthplace'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Father's Name</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="father" class="form-control" id="father" value="<?php echo $row['father'] ?>">
+																		</div>
+																	</div>
+																</div>
+																
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Mother's Name</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="mother" class="form-control" id="mother" value="<?php echo $row['mother'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Date of Baptismal</label>
+																		<div class="col-sm-9">
+																		<input type="text" name="baptismalDate" class="form-control" id="baptismalDate" value="<?php echo $row['baptismalDate'] ?>"></p>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Time</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="time" class="form-control" id="time" value="<?php echo $row['baptismalTime'] ?>">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Purpose</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="purpose" class="form-control" id="purpose" value="<?php echo $row['purpose'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Godfather</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="godfather" class="form-control" id="godfather" value="<?php echo $row['godfather'] ?>">
+																		</div>
+																	</div>
+																</div>
+																
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Godmother</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="godmother" class="form-control" id="godmother" value="<?php echo $row['godmother'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Presider</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="presider" class="form-control" id="presider" value="<?php echo $row['presider'] ?>">
+																		</div>
+																	</div>
+																</div>
+																
+																<div class="col-md-6">
+																	<div class="mb-3 row">
+																		<label for="staticEmail" class="col-sm-3 col-form-label">Parish Priest</label>
+																		<div class="col-sm-9">
+																			<input type="text" name="priest" class="form-control" id="priest" value="<?php echo $row['priest'] ?>">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+															<button type="submit" name="add" class="btn btn-primary">Save</button>
+														</div>
+													</form>
+												
+											</div>
+										</div>
+									</div>
 
 									<?php endwhile; ?>
+
 								</tbody>
 								
 							</table>
@@ -330,6 +489,7 @@ if (isset($_POST['add'])) {
 	$(function(){
 		$('#birthDate').datepicker();
 		$('#baptismalDate').datepicker();
+		$('#updateBirthDate').datepicker();
 	});
 
 	$(document).ready(function() {
@@ -356,6 +516,7 @@ if (isset($_POST['add'])) {
 		}
 		})  
 	});
+
 </script>
 </html>
 
