@@ -39,6 +39,14 @@ if (isset($_POST['add'])) {
 		echo '<script>alert("Added successfully.")</script>';
 		echo '<script>windows: location="baptism.php"</script>';
 }
+
+if (isset($_POST['delete'])) {
+	include 'connection.php';
+	$id = $_POST['id'];
+	mysqli_query($con,"DELETE from baptism_tbl where id='$id'");
+	echo '<script>alert("Deleted.")</script>';
+	echo '<script>windows: location="baptism.php"</script>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -306,7 +314,7 @@ if (isset($_POST['add'])) {
 													<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
 												</li>
 												<li class="list-inline-item">
-													<a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
+													<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
 												</li>	
 											</ul>
 											<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
@@ -467,14 +475,36 @@ if (isset($_POST['add'])) {
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-															<button type="submit" name="add" class="btn btn-primary">Save</button>
+															<button type="submit" name="add" class="btn btn-primary">Update</button>
 														</div>
 													</form>
 												
 											</div>
 										</div>
 									</div>
-
+									
+									<!-- Delete Modal -->
+									<div class="modal fade" id="deleteModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<form lass="modal-content animate" method="post">
+													<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+													<div class="modal-header">
+														<h5 class="modal-title" id="deleteModal">Delete!</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">
+														Are you sure you want to delete this record?
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+														<button type="submit" name="delete" class="btn btn-danger">Yes</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									
 									<?php endwhile; ?>
 
 								</tbody>

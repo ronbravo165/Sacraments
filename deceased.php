@@ -16,26 +16,35 @@ while ($row = mysqli_fetch_array($result)) {
 ?>
 
 <?php
-if (isset($_POST['add'])) {
-	include 'connection.php';
-		$bn = $_POST['bn'];
-		$pn = $_POST['pn'];
-		$ln = $_POST['ln'];
-		$fullname = $_POST['fullname'];
-		$father = $_POST['father'];
-		$mother = $_POST['mother'];
-		$birthplace = $_POST['birthPlace'];
-		$bday = $_POST['birthDate'];
-		$decday = $_POST['deathDate'];
-		$presider = $_POST['presider'];
-		$caused = $_POST['caused'];
-		$priest = $_POST['priest'];
+	if (isset($_POST['add'])) {
+		include 'connection.php';
+			$bn = $_POST['bn'];
+			$pn = $_POST['pn'];
+			$ln = $_POST['ln'];
+			$fullname = $_POST['fullname'];
+			$father = $_POST['father'];
+			$mother = $_POST['mother'];
+			$birthplace = $_POST['birthPlace'];
+			$bday = $_POST['birthDate'];
+			$decday = $_POST['deathDate'];
+			$presider = $_POST['presider'];
+			$caused = $_POST['caused'];
+			$priest = $_POST['priest'];
 
-		mysqli_query($con, "INSERT INTO deceased_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, decdate, presider, priest, caused) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$decday', '$presider', '$priest', '$caused')");
+			mysqli_query($con, "INSERT INTO deceased_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, decdate, presider, priest, caused) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$decday', '$presider', '$priest', '$caused')");
 
-		echo '<script>alert("Added successfully.")</script>';
+			echo '<script>alert("Added successfully.")</script>';
+			echo '<script>windows: location="deceased.php"</script>';
+	}
+
+	if (isset($_POST['delete'])) {
+		include 'connection.php';
+		$id = $_POST['id'];
+		mysqli_query($con,"DELETE from deceased_tbl where id='$id'");
+
+		echo '<script>alert("Deleted.")</script>';
 		echo '<script>windows: location="deceased.php"</script>';
-}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -266,21 +275,171 @@ if (isset($_POST['add'])) {
 							<td><?php echo $row['caused']; ?></td>
 							<td><?php echo $row['priest']; ?></td>
 							<td>
-							<ul class="list-inline m-0">
+								<ul class="list-inline m-0">
 									<li class="list-inline-item">
-										<button class="btn btn-primary btn-sm rounded-0" type="button" title="Add"><i class="fa fa-table"></i></button>
+										<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
 									</li>
 									<li class="list-inline-item">
-										<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
-									</li>
-									<li class="list-inline-item">
-										<a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
-									</li>
+										<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+									</li>	
 								</ul>
-								<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
-							
 							</td>
 						</tr>
+						
+						<!-- View Modal -->
+						<div class="modal fade" id="updateModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-xl">
+							<div class="modal-content" >
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">Deceased Form</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+									<form class="modal-content animate" method="post">
+										<div class="modal-body">
+										
+										<div class="row">
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="staticEmail" class="col-sm-3 col-form-label">Book No.</label>
+													<div class="col-sm-9">
+														<input type="text" name="bn" class="form-control" id="bn" value="<?php echo $row['bn'] ?>">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="staticEmail" class="col-sm-3 col-form-label">Page No.</label>
+													<div class="col-sm-9">
+														<input type="text" name="pn" class="form-control" id="pn" value="<?php echo $row['pn'] ?>">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="ln" class="col-sm-3 col-form-label">Line No.</label>
+													<div class="col-sm-9">
+														<input type="text" name="ln" class="form-control" id="ln" value="<?php echo $row['ln'] ?>">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="fullname" class="col-sm-3 col-form-label">Full Name</label>
+													<div class="col-sm-9">
+														<input type="text" name="fullname" class="form-control" id="fullname" value="<?php echo $row['fullname'] ?>">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="birthDate" class="col-sm-3 col-form-label">Birth Date</label>
+													<div class="col-sm-9">
+													<input type="text" name="birthDate" class="form-control" id="birthDate" value="<?php echo $row['birthdate'] ?>"></p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="mb-3 row">
+													<label for="birthPlace" class="col-sm-3 col-form-label">Birth Place</label>
+													<div class="col-sm-9">
+														<input type="text" name="birthPlace" class="form-control" id="birthPlace" value="<?php echo $row['birthplace'] ?>">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="father" class="col-sm-3 col-form-label">Father's Name</label>
+													<div class="col-sm-9">
+														<input type="text" name="father" class="form-control" id="father" value="<?php echo $row['father'] ?>">
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="mother" class="col-sm-3 col-form-label">Mother's Name</label>
+													<div class="col-sm-9">
+														<input type="text" name="mother" class="form-control" id="mother" value="<?php echo $row['mother'] ?>">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="deathDate" class="col-sm-3 col-form-label">Date of Death</label>
+													<div class="col-sm-9">
+													<input type="text" name="deathDate" class="form-control" id="deathDate" value="<?php echo $row['decdate'] ?>"></p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="caused" class="col-sm-3 col-form-label">Caused</label>
+													<div class="col-sm-9">
+														<input type="text" name="caused" class="form-control" id="caused" value="<?php echo $row['caused'] ?>">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="presider" class="col-sm-3 col-form-label">Presider</label>
+													<div class="col-sm-9">
+														<input type="text" name="presider" class="form-control" id="presider" value="<?php echo $row['presider'] ?>">
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-md-6">
+												<div class="mb-3 row">
+													<label for="priest" class="col-sm-3 col-form-label">Parish Priest</label>
+													<div class="col-sm-9">
+														<input type="text" name="priest" class="form-control" id="priest" value="<?php echo $row['priest'] ?>">
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+											<button type="submit" name="add" class="btn btn-primary">Update</button>
+										</div>
+									</form>
+								
+							</div>
+							</div>
+						</div>
+									
+						<!-- Delete Modal -->
+						<div class="modal fade" id="deleteModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<form lass="modal-content animate" method="post">
+										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+										<div class="modal-header">
+											<h5 class="modal-title" id="deleteModal">Delete!</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to delete this record?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+											<button type="submit" name="delete" class="btn btn-danger">Yes</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 
 						<?php endwhile; ?>
 					</tbody>
