@@ -348,7 +348,9 @@ while ($row = mysqli_fetch_array($result)) {
 											}
 												
 										?>		
-										
+										<li class="list-inline-item">
+											<a class="btn btn-info btn-sm rounded-0 print_baptism" title="Print" href="viewbap.php?id=<?php echo $row['id']; ?>"><i class="fa fa-print"></i></a>
+										</li>
 									</ul>
 								</td>
 							</tr>

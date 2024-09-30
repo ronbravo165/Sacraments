@@ -10,31 +10,27 @@
 	$owner_id = $_REQUEST['id'];
 
 	$result = mysqli_query($con,"SELECT * from baptism_tbl where id = '$owner_id'");
-	$test = mysqli_fetch_array($result);
+	$recordResult = mysqli_fetch_array($result);
 
 	if (!$result) {
 		die("Error: Data not found.");
 	}
 
-		$id = $test['id'];
-		$bn = $test['bn'];
-		$pn = $test['pn'];
-		$ln = $test['ln'];
-		$fullname = $test['fullname'];
-		$father = $test['father'];
-		$mother = $test['mother'];
-		$birthplace = $test['birthplace'];
-		$bday = $test['bday'];
-		$bmonth = $test['bmonth'];
-		$byear = $test['byear'];
-		$bapday = $test['bapday'];
-		$bapmonth = $test['bapmonth'];
-		$bapyear = $test['bapyear'];
-		$godfather = $test['godfather'];
-		$godmother = $test['godmother'];
-		$presider = $test['presider'];
-		$purpose = $test['purpose'];
-		$priest = $test['priest'];
+		$id = $recordResult['id'];
+		$bn = $recordResult['bn'];
+		$pn = $recordResult['pn'];
+		$ln = $recordResult['ln'];
+		$fullname = $recordResult['fullname'];
+		$father = $recordResult['father'];
+		$mother = $recordResult['mother'];
+		$birthplace = $recordResult['birthplace'];
+		$bday = $recordResult['birthdate'];
+		$baptismalDate = $recordResult['baptismalDate'];
+		$godfather = $recordResult['godfather'];
+		$godmother = $recordResult['godmother'];
+		$presider = $recordResult['presider'];
+		$purpose = $recordResult['purpose'];
+		$priest = $recordResult['priest'];
 
 ?>
 
@@ -76,7 +72,7 @@
 			<br><br><br><br><br>
 			<p align="center" style="font-family: century gothic; font-size: 30px;">Certificate of Baptism</p>
 
-			<p align="center" style="font-family: century gothic;">This is to certify that</p><h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $bmonth;?> <?php echo $bday;?>, <?php echo $byear;?></b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $bapmonth;?> <?php echo $bapday;?>, <?php echo $bapyear;?></b><br><br>the Holy Sacrament of Baptism which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
+			<p align="center" style="font-family: century gothic;">This is to certify that</p><h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $birthplace;?></b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $baptismalDate;?> </b><br><br>the Holy Sacrament of Baptism which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
 
 <br>
 		<center>
