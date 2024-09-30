@@ -31,10 +31,10 @@
 			</div> -->
 			<form class="rounded bg-white shadow p-5" method="post" action="process.php">
 				<h3 class="text-dark fw-bolder fs-4 mb-2">Parishioner's Login</h3>
-
-				<div class="fw-normal text-muted mb-2">
+				<div class="clearfix">&nbsp;</div>
+				<!-- <div class="fw-normal text-muted mb-2">
 					Don't have an account? <a href="register.php" class="text-primary fw-bold text-decoration-none">Sign up here</a>
-				</div>
+				</div> -->
 
 				<div class="form-floating mb-3">
 					<input type="username" class="form-control" id="username" name="username" placeholder="username" required>
@@ -56,6 +56,10 @@
 					</label>
 				</div> -->
 				<button type="submit" name="submit" class="btn btn-primary submit_btn w-100 my-4">Login</button> 
+				<div class="fw-normal text-muted mb-2">
+					<a href="register.php" class="text-primary fw-bold text-decoration-none">Forgot password?</a> or
+					<a href="register.php" class="text-primary fw-bold text-decoration-none">Sign up here</a>
+				</div>
 			</form>
 		</div>
 	</div>
