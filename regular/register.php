@@ -1,14 +1,15 @@
 <?php
 if (isset($_POST['add'])) {
 	include '../connection.php';
-		$id = $_POST['id'];
-		$fullname = $_POST['fullname'];
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
+		$email = $_POST['emailAddress'];
 		$username = $_POST['username'];
-		$password = $_POST['password'];
+		$password = md5($_POST['password']);
 
-		mysqli_query($con,"INSERT INTO register_tbl (id, fullname, username, password) VALUES ('$id', '$fullname', '$username', '$password')");
+		mysqli_query($con,"INSERT INTO register_tbl (firstname, lastname, email, username, password) VALUES ('$firstname', '$lastname', '$email', '$username', '$password')");
 
-		echo '<script>alert("Added successfully.")</script>';
+		echo '<script>alert("Your account has been created successfully.")</script>';
 		echo '<script>windows: location="index.php"</script>';
 }
 ?>
@@ -18,60 +19,76 @@ if (isset($_POST['add'])) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="../images/logo.png">
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link href="../bootstrap.min.css" rel="stylesheet" type='text/css'>
+	<link rel="icon" type="image/png" href="images/logo.png">
+	<link rel="stylesheet" type="text/css" href="../css/heading.css">
+	<link rel="stylesheet" href="../jquery-ui.css">
+	<link href="../fonts/font-awesome.min.css" rel="stylesheet" type='text/css'>
+
+	<script src="../bootstrap.bundle.min.js" ></script>
+	<script src="../popper.min.js"></script>
+	<script src="../bootstrap.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src='../jquery-3.7.0.js'></script>
+	<script src="../jquery-1.12.4.js"></script>
+	<script src="../jquery-ui.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./regular.css">
 	<title>SRS - Register</title>
-
-	<style type="text/css">
-		
-		.register{
-			width: 30%;
-			margin: 150px auto;
-			font-family: century gothic;
-		}
-
-		.register input[type=text], .register input[type=password]{
-			width: 100%;
-			height: 30px;
-		}
-
-		.register input[type=submit]{
-			width: 100px;
-			height: 30px;
-			background-color: #33FF33;
-			color: black;
-			border: none;
-			text-transform: uppercase;
-			font-family: century gothic;
-		}
-
-		.register input[type=submit]:hover{
-			color: white;
-			background-color: green;
-			transition: .5s;
-		}
-
-	</style>
 
 </head>
 
 <body>
+<section class="wrapper">
+	<div class="container">
+		<div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 text-center">
+			<!-- <div class="logo">
+				<img decoding="async" src="/Sacraments/images/logo.png" class="img-fluid" alt="logo">
+			</div> -->
+			<form class="rounded bg-white shadow p-5" method="post">
+				<h3 class="text-dark fw-bolder fs-4 mb-2">Create an Account</h3>
 
-	<div class="register">
-		<form method="post">
-			<input type="hidden" value="0" name="id">
-			<h2 align="center">Signup Form</h2>
-			<label>Full Name:</label><br>
-			<input type="text" name="fullname" required><br>
-			<label>Username:</label><br>
-			<input type="text" name="username" required><br>
-			<label>Password:</label><br>
-			<input type="password" name="password" required><br><br>
+				<div class="fw-normal text-muted mb-2">
+					Already have an account? <a href="index.php" class="text-primary fw-bold text-decoration-none">Sign in here</a>
+				</div>
 
-			<center><input type="submit" value="Sign Up" name="add"></center>
-
-		</form>
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" id="firstname" name="firstname" placeholder="name@example.com" required>
+					<label for="floatingFirstName">First Name</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" id="lastname" name="lastname" placeholder="name@example.com" required>
+					<label for="floatingLastName">Last Name</label>
+				</div> 
+				<div class="form-floating mb-3">
+					<input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="name@example.com" required>
+					<label for="floatingInput">Email address</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="username" class="form-control" id="username" name="username" placeholder="username" required>
+					<label for="floatingInput">Username</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+					<label for="floatingPassword">Password</label>
+					<!-- <span class="password-info mt-2">Use 8 or more characters with a mix of letters, numbers & symbols.</span> -->
+				</div> 
+				<!-- <div class="form-floating mb-3">
+					<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Password" required>
+					<label for="floatingPassword">Confirm Password</label>
+				</div>  -->
+				<!-- <div class="form-check d-flex align-items-center">
+					<input class="form-check-input" type="checkbox" id="gridCheck" checked>
+					<label class="form-check-label ms-2" for="gridCheck">
+						I Agree <a href="#">Terms and conditions</a>.
+					</label>
+				</div> -->
+				<button type="submit" name="add" class="btn btn-primary submit_btn w-100 my-4">Continue</button> 
+			</form>
+		</div>
 	</div>
+</section>
 	
 </body>
 </html>
