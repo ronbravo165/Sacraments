@@ -11,7 +11,7 @@ $session = $_SESSION['id'];
 include '../connection.php';
 $result = mysqli_query($con,"SELECT * FROM register_tbl where id = '$session'");
 while ($row = mysqli_fetch_array($result)) {
-	$sessionname = $row['firstname'] . $row['lastname'];
+	$sessionname = $row['firstname'] . ' ' . $row['lastname'];
 }
 ?>
 
@@ -40,6 +40,7 @@ while ($row = mysqli_fetch_array($result)) {
 	<!-- <script src='jquery.dataTables.min.js'></script>
 	<script src='dataTables.responsive.min.js'></script>
 	<script src='dataTables.bootstrap5.min.js'></script> -->
+	<link rel="stylesheet" type="text/css" href="./regular.css">
 	<title>SRS - Home | Parishioner</title>
 
 
@@ -101,15 +102,74 @@ while ($row = mysqli_fetch_array($result)) {
         </div>
     </div>
 </nav>
-	<!-- <div class="header">
-		<img src="../images/logo.png">
-		<h1>Parokya ni San Nicolas de Tolentino</h1>
-		<h3>Welcome, <?php echo $sessionname;?>!</h3>
-		<a href="logout.php" style="float: right; margin-right: 30px; margin-top: 30px;">Logout</a>
-	</div> -->
-		
-	<div style="width: 50%; margin: 100px auto;">
-		<h2 align="center">Request a Record</h2><br>
+	<div class="container-fluid">
+		<div class="col py-3">
+			<div class="container">
+				<div class="clearfix">&nbsp;</div>
+				<div class="m-t-80">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="card text-bg-warning mb-3 " style="max-width: 18rem;">
+							
+								<div class="card-body text-center card-height">
+									<h5 class="card-title">
+										<a href="baptismalrequest.php" class="text-bg-warning text-decoration">Baptism Request</a>
+									</h5>
+									
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div  class="card text-bg-info mb-3" style="max-width: 18rem;">
+							
+								<div class="card-body text-center card-height">
+									<h5 class="card-title">
+										<a href="confirmationrequest.php" class="text-bg-info text-decoration">Confirmation Request</a>
+									</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="card text-bg-light mb-3" style="max-width: 18rem;">
+								<div class="card-body text-center card-height">
+									<h5 class="card-title">
+										<a href="communionrequest.php" class="text-bg-light text-decoration">Communion Request</a>
+									</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clear-fix">&nbsp;</div>
+				
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+								<div class="card-body text-center card-height">
+									<h5 class="card-title">
+										<a href="weddingrequest.php" class="text-bg-primary text-decoration">Wedding Request</a>
+									</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+								<div class="card-body text-center card-height">
+									<h5 class="card-title">
+										<a href="deceasedrequest.php" class="text-bg-secondary text-decoration">Deceased Request</a>
+									</h5>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+	<!-- <div style="width: 50%; margin: 100px auto;">
+		<h2 align="center">Submit A Request</h2><br>
 
 		<center><a href="baptismalrequest.php" class="button" style="padding: 5px 44px;">Baptism</a></center><br>
 		<center><a href="confirmationrequest.php" class="button">Confirmation</a></center><br>
@@ -117,7 +177,7 @@ while ($row = mysqli_fetch_array($result)) {
 		<center><a href="weddingrequest.php" class="button" style="padding: 5px 38px;">Wedding</a></center><br>
 		<center><a href="deceasedrequest.php" class="button" style="padding: 5px 35px;">Deceased</a></center><br>
 
-	</div>
+	</div> -->
 
 </body>
 </html>

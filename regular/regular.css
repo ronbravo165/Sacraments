@@ -64,5 +64,18 @@ body{
 .wrapper .login_with img{
     max-width:7%;
 }
-        
-      
+
+.card-height {
+    height: 150px;
+   
+}
+
+.card-title {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}
+
+.text-decoration {
+    text-decoration-line: none;
+}

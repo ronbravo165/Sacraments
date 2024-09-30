@@ -105,20 +105,20 @@ while ($row = mysqli_fetch_array($result)) {
 										<td>Fullname</td>
 										<td>Address</td>
 										<td>Birthday</td>
-										<td>Action</td>
+										<!-- <td>Action</td> -->
 									</tr>
 								</thead>
 								
 								<tbody>
 									<?php include 'connection.php';
-											$result = mysqli_query($con,"SELECT * FROM baprequest_tbl"); 
+											$result = mysqli_query($con,"SELECT * FROM baptism_tbl"); 
 											while ($row = $result->fetch_assoc()):
 									?>
 									<tr>
 										<td><?php echo $row['fullname']; ?></td>
-										<td><?php echo $row['address']; ?></td>
-										<td><?php echo $row['birthday']; ?></td>
-										<td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td>
+										<td><?php echo $row['birthplace']; ?></td>
+										<td><?php echo $row['birthdate']; ?></td>
+										<!-- <td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td> -->
 									</tr>
 
 									<?php endwhile; ?>
@@ -250,7 +250,7 @@ while ($row = mysqli_fetch_array($result)) {
     $('.example').DataTable({
       //disable sorting on last column
       "columnDefs": [
-        { "orderable": false, "targets": 3 }
+        { "orderable": false, "targets": 2 }
       ],
       language: {
         //customize pagination prev and next buttons: use arrows instead of words
