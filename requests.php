@@ -7,12 +7,28 @@ if (!isset($_SESSION['id'])) {
 ?>
 
 <?php
-$session = $_SESSION['id'];
-include 'connection.php';
-$result = mysqli_query($con,"SELECT * FROM user_tbl where id = '$session'");
-while ($row = mysqli_fetch_array($result)) {
-	$sessionname = $row['fullname'];
-}
+	$session = $_SESSION['id'];
+	include 'connection.php';
+	$result = mysqli_query($con,"SELECT * FROM user_tbl where id = '$session'");
+	while ($row = mysqli_fetch_array($result)) {
+		$sessionname = $row['fullname'];
+	}
+
+	if (isset($_POST['approve'])) {
+		include 'connection.php';
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE baptism_tbl SET status = 1 where id = '$id'");
+		echo '<script>alert("This request has been approved!")</script>';
+		echo '<script>windows: location="requests.php"</script>';
+	}
+
+	if (isset($_POST['reject'])) {
+		include 'connection.php';
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE baptism_tbl SET status = 2 where id = '$id'");
+		echo '<script>alert("This request has been rejected!")</script>';
+		echo '<script>windows: location="requests.php"</script>';
+	}
 ?>
 
 <!DOCTYPE html>
@@ -81,50 +97,187 @@ while ($row = mysqli_fetch_array($result)) {
 				<div class="m-4">
 					<ul class="nav nav-tabs" id="myTab">
 						<li class="nav-item">
-							<a href="#baptismal" class="nav-link active" data-bs-toggle="tab">Baptismal Requests</a>
+							<a href="#baptismal" class="nav-link active" data-bs-toggle="tab"><strong>Baptismal Requests</strong></a>
 						</li>
 						<li class="nav-item">
-							<a href="#communion" class="nav-link" data-bs-toggle="tab">Communion Requests</a>
+							<a href="#communion" class="nav-link" data-bs-toggle="tab"><strong>Communion Requests</strong></a>
 						</li>
 						<li class="nav-item">
-							<a href="#confirmation" class="nav-link" data-bs-toggle="tab">Confirmation Requests</a>
+							<a href="#confirmation" class="nav-link" data-bs-toggle="tab"><strong>Confirmation Requests</strong></a>
 						</li>
 						<li class="nav-item">
-							<a href="#wedding" class="nav-link" data-bs-toggle="tab">Wedding Requests</a>
+							<a href="#wedding" class="nav-link" data-bs-toggle="tab"><strong>Wedding Requests</strong></a>
 						</li>
 						<li class="nav-item">
-							<a href="#deceased" class="nav-link" data-bs-toggle="tab">Deceased Record Requests</a>
+							<a href="#deceased" class="nav-link" data-bs-toggle="tab"><strong>Deceased Record Requests</strong></a>
 						</li>
 					</ul>
 					<div class="clearfix">&nbsp;</div>
+					<hr>
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="baptismal">
-							<table id="example" class="table table-striped example" style="width:100%">
-								<thead>
-									<tr>
-										<td>Fullname</td>
-										<td>Address</td>
-										<td>Birthday</td>
-										<!-- <td>Action</td> -->
-									</tr>
-								</thead>
+							<ul class="nav nav-tabs" id="myTab">
+								<li class="nav-item">
+									<a href="#pending" class="nav-link active" data-bs-toggle="tab">Pending Requests</a>
+								</li>
+								<li class="nav-item">
+									<a href="#approved" class="nav-link" data-bs-toggle="tab"><strong>Approved Requests</strong></a>
+								</li>
+								<li class="nav-item">
+									<a href="#rejected" class="nav-link" data-bs-toggle="tab"><strong>Rejected Requests</strong></a>
+								</li>
 								
-								<tbody>
-									<?php include 'connection.php';
-											$result = mysqli_query($con,"SELECT * FROM baptism_tbl"); 
-											while ($row = $result->fetch_assoc()):
-									?>
-									<tr>
-										<td><?php echo $row['fullname']; ?></td>
-										<td><?php echo $row['birthplace']; ?></td>
-										<td><?php echo $row['birthdate']; ?></td>
-										<!-- <td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td> -->
-									</tr>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="pending">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+											<td>Fullname</td>
+											<td>Address</td>
+											<td>Birthday</td>
+											<td>Action</td>
+											</tr>
+										</thead>
 
-									<?php endwhile; ?>
-								</tbody>
-								
-							</table>
+										<tbody>
+											<?php include 'connection.php';
+											$result = mysqli_query($con,"SELECT * FROM baptism_tbl where status = 0 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+											<td><?php echo $row['fullname']; ?></td>
+											<td><?php echo $row['birthplace']; ?></td>
+											<td><?php echo $row['birthdate']; ?></td>
+											<td>
+												<?php
+													$requestorId = $row['registerId'];
+													$status = $row['status'];
+													$bapId = $row['id'];		
+													if ($requestorId != 0 && $status == 0) {
+														print('<li class="list-inline-item">
+																	<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
+																</li>	
+																<li class="list-inline-item">
+																	<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#rejectModal"><i class="fa fa-times"></i></a>
+																</li>'
+															);
+													}
+													
+												?>	
+											</td>
+											</tr>
+											<!-- Approve Modal -->
+											<div class="modal fade" id="approveModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form lass="modal-content animate" method="post">
+															<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+															<div class="modal-header">
+																<h5 class="modal-title" id="approveModal">Approval!</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																Are you sure you want to approve this request?
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+																<button type="submit" name="approve" class="btn btn-success">Yes</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											
+											<!-- Reject Modal -->
+											<div class="modal fade" id="rejectModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form lass="modal-content animate" method="post">
+															<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+															<div class="modal-header">
+																<h5 class="modal-title" id="rejectModal">Reject!</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																Are you sure you want to reject this request?
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+																<button type="submit" name="reject" class="btn btn-success">Yes</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+								<div class="tab-pane fade " id="approved">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+											<td>Fullname</td>
+											<td>Address</td>
+											<td>Birthday</td>
+											<!-- <td>Action</td> -->
+											</tr>
+										</thead>
+
+										<tbody>
+											<?php include 'connection.php';
+											$result = mysqli_query($con,"SELECT * FROM baptism_tbl where status = 1 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+											<td><?php echo $row['fullname']; ?></td>
+											<td><?php echo $row['birthplace']; ?></td>
+											<td><?php echo $row['birthdate']; ?></td>
+											<!-- <td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td> -->
+											</tr>
+
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+								<div class="tab-pane fade s" id="rejected">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+											<td>Fullname</td>
+											<td>Address</td>
+											<td>Birthday</td>
+											<!-- <td>Action</td> -->
+											</tr>
+										</thead>
+
+										<tbody>
+											<?php include 'connection.php';
+											$result = mysqli_query($con,"SELECT * FROM baptism_tbl where status = 2 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+											<td><?php echo $row['fullname']; ?></td>
+											<td><?php echo $row['birthplace']; ?></td>
+											<td><?php echo $row['birthdate']; ?></td>
+											<!-- <td><a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a></td> -->
+											</tr>
+
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							
+							<div class="clearfix">&nbsp;</div>
+							
 						</div>
 						<div class="tab-pane fade" id="communion">
 							<table id="example" class="table table-striped example" style="width:100%">
@@ -239,6 +392,7 @@ while ($row = mysqli_fetch_array($result)) {
 							</table>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 		</div>
