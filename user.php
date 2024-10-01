@@ -98,7 +98,7 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td>Full name</td>
 							<td>Username</td>
-							<td>Action</td>
+							<!-- <td>Action</td> -->
 						</tr>
 					</thead>
 					
@@ -110,7 +110,7 @@ if (isset($_POST['add'])) {
 						<tr>
 							<td><?php echo $row['fullname']; ?></td>
 							<td><?php echo $row['username']; ?></td>
-							<td>
+							<!-- <td>
 							<ul class="list-inline m-0">
 									<li class="list-inline-item">
 										<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit"><i class="fa fa-edit"></i></button>
@@ -119,9 +119,7 @@ if (isset($_POST['add'])) {
 										<a class="btn btn-danger btn-sm rounded-0" title="Delete" href='baptismdelete.php?id="<?php echo $row['id']; ?>"'><i class="fa fa-trash"></i></a>
 									</li>
 								</ul>
-								<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
-							
-							</td>
+							</td> -->
 						</tr>
 
 						<?php endwhile; ?>
@@ -170,7 +168,7 @@ if (isset($_POST['add'])) {
 		$('.example').DataTable({
 		//disable sorting on last column
 		"columnDefs": [
-			{ "orderable": false, "targets": 2 }
+			{ "orderable": false, "targets": 1 }
 		],
 		language: {
 			//customize pagination prev and next buttons: use arrows instead of words
