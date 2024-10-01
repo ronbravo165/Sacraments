@@ -33,8 +33,8 @@ while ($row = mysqli_fetch_array($result)) {
 			$presider = $_POST['presider'];
 			$purpose = $_POST['purpose'];
 			$priest = $_POST['priest'];
-
-			mysqli_query($con,"INSERT INTO communion_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, comdate, comtime, godfather, godmother, presider, purpose, priest) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$communionDate', '$comtime', '$godfather', '$godmother', '$presider', '$purpose', '$priest')");
+			$status = 1;
+			mysqli_query($con,"INSERT INTO communion_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, comdate, comtime, godfather, godmother, presider, purpose, priest, status) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$communionDate', '$comtime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
 
 			echo '<script>alert("Added successfully.")</script>';
 			echo '<script>windows: location="communion.php"</script>';
@@ -45,6 +45,20 @@ while ($row = mysqli_fetch_array($result)) {
 		mysqli_query($con,"DELETE from communion_tbl where id='$id'");
 
 		echo '<script>alert("Deleted.")</script>';
+		echo '<script>windows: location="communion.php"</script>';
+	}
+
+	if (isset($_POST['approve'])) {
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE communion_tbl SET status = 1 where id = '$id'");
+		echo '<script>alert("This request has been approved!")</script>';
+		echo '<script>windows: location="communion.php"</script>';
+	}
+
+	if (isset($_POST['reject'])) {
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE communion_tbl SET status = 2 where id = '$id'");
+		echo '<script>alert("This request has been rejected!")</script>';
 		echo '<script>windows: location="communion.php"</script>';
 	}
 ?>
@@ -310,16 +324,34 @@ while ($row = mysqli_fetch_array($result)) {
 							<td><?php echo $row['comtime']; ?></td>
 							<td><?php echo $row['priest']; ?></td>
 							<td>
-							<ul class="list-inline m-0">
-								<li class="list-inline-item">
-									<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-								</li>
-								<li class="list-inline-item">
-									<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-								</li>	
-							</ul>
-								<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
-							
+								<ul class="list-inline m-0">
+									<li class="list-inline-item">
+										<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+									</li>
+									<li class="list-inline-item">
+										<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+									</li>
+									<?php
+										$requestorId = $row['registerId'];
+										$status = $row['status'];
+										$conId = $row['id'];		
+										if ($requestorId != 0 && $status == 0) {
+											print('<li class="list-inline-item">
+														<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$conId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
+													</li>	
+													<li class="list-inline-item">
+														<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectModal'.$conId.'" href="javascript:void(0)" data-bs-target="#rejectModal"><i class="fa fa-times"></i></a>
+													</li>'
+												);
+										} else if ($status == 1) {
+											print('<li class="list-inline-item">
+														<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewcon.php?id='.$conId.'"><i class="fa fa-print"></i></a>
+														</li>'
+													);
+										}
+											
+									?>			
+								</ul>
 							</td>
 						</tr>
 						
@@ -500,6 +532,50 @@ while ($row = mysqli_fetch_array($result)) {
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
 											<button type="submit" name="delete" class="btn btn-danger">Yes</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<!-- Approve Modal -->
+						<div class="modal fade" id="approveModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<form lass="modal-content animate" method="post">
+										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+										<div class="modal-header">
+											<h5 class="modal-title" id="approveModal">Approval!</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to approve this request?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+											<button type="submit" name="approve" class="btn btn-success">Yes</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Reject Modal -->
+						<div class="modal fade" id="rejectModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<form lass="modal-content animate" method="post">
+										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+										<div class="modal-header">
+											<h5 class="modal-title" id="rejectModal">Reject!</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to reject this request?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+											<button type="submit" name="reject" class="btn btn-success">Yes</button>
 										</div>
 									</form>
 								</div>

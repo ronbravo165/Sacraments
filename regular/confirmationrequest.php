@@ -331,28 +331,18 @@ if (isset($_POST['delete'])) {
 							</td>
 							<td>
 								<?php
-										$status = $row['status'];	
-										$conId = $row['id'];
-										if ($status == 0) {
-											print('<li class="list-inline-item">
-														<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$conId.'>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-													</li>
-													<li class="list-inline-item">
-														<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$conId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-													</li>'
-												);
-										} 
-									?>	
-								<!-- <ul class="list-inline m-0">
-									<li class="list-inline-item">
-										<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-									</li>
-									<li class="list-inline-item">
-										<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-									</li>	
-								</ul> -->
-								<!-- <a style='text-decoration: none; color: black;' href='baprequestdelete.php?id="<?php echo $row['id']; ?>"'>&nbsp;&nbsp;Delete&nbsp;&nbsp;</a> -->
-							
+									$status = $row['status'];	
+									$conId = $row['id'];
+									if ($status == 0) {
+										print('<li class="list-inline-item">
+													<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$conId.'>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+												</li>
+												<li class="list-inline-item">
+													<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$conId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+												</li>'
+											);
+									} 
+								?>	
 							</td>
 						</tr>
 						

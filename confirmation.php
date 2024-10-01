@@ -33,8 +33,8 @@ while ($row = mysqli_fetch_array($result)) {
 			$presider = $_POST['presider'];
 			$purpose = $_POST['purpose'];
 			$priest = $_POST['priest'];
-
-			mysqli_query($con,"INSERT INTO confirmation_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, condate, contime, godfather, godmother, presider, purpose, priest) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$confirmationDate', '$confirmationTime', '$godfather', '$godmother', '$presider', '$purpose', '$priest')");
+			$status = 1;
+			mysqli_query($con,"INSERT INTO confirmation_tbl (bn, pn, ln, fullname, father, mother, birthplace, birthdate, condate, contime, godfather, godmother, presider, purpose, priest, status) VALUES ('$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$confirmationDate', '$confirmationTime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
 
 			echo '<script>alert("Added successfully.")</script>';
 			echo '<script>windows: location="confirmation.php"</script>';
