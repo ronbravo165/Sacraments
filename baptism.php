@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_array($result)) {
 															<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#rejectModal"><i class="fa fa-times"></i></a>
 														</li>'
 													);
-											} else if ($requestorId != 0 && $status == 1) {
+											} else if ($status == 1) {
 												print('<li class="list-inline-item">
 														<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewbap.php?id='.$bapId.'"><i class="fa fa-print"></i></a>
 														</li>'

@@ -37,9 +37,9 @@ while ($row = mysqli_fetch_array($result)) {
 			$godmother = $_POST['godmother'];
 			$wedday = $_POST['weddingdate'];
 			$presider = $_POST['presider'];
+			$status = 1;
 
-
-			mysqli_query($con,"INSERT INTO wedding_tbl (bn, pn, ln, groom, groomage, groombirthdate, groomfather, groommother, groomaddress, bride, brideage, bridebirthdate, bridefather, bridemother, brideaddress, godfather, godmother, wedday, presider) VALUES ('$bn', '$pn', '$ln', '$groom', '$groomage', '$groombday', '$groomfather', '$groommother', '$groomaddress', '$bride', '$brideage', '$bridebday', '$bridefather', '$bridemother', '$brideaddress', '$godfather', '$godmother', '$wedday', '$presider')");
+			mysqli_query($con,"INSERT INTO wedding_tbl (bn, pn, ln, groom, groomage, groombirthdate, groomfather, groommother, groomaddress, bride, brideage, bridebirthdate, bridefather, bridemother, brideaddress, godfather, godmother, wedday, presider, status) VALUES ('$bn', '$pn', '$ln', '$groom', '$groomage', '$groombday', '$groomfather', '$groommother', '$groomaddress', '$bride', '$brideage', '$bridebday', '$bridefather', '$bridemother', '$brideaddress', '$godfather', '$godmother', '$wedday', '$presider', '$status')");
 
 			echo '<script>alert("Added successfully.")</script>';
 			echo '<script>windows: location="wedding.php"</script>';
