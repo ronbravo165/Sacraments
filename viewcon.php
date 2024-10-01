@@ -10,31 +10,27 @@
 	$owner_id = $_REQUEST['id'];
 
 	$result = mysqli_query($con,"SELECT * from confirmation_tbl where id = '$owner_id'");
-	$test = mysqli_fetch_array($result);
+	$printCon = mysqli_fetch_array($result);
 
 	if (!$result) {
 		die("Error: Data not found.");
 	}
 
-		$id = $test['id'];
-		$bn = $test['bn'];
-		$pn = $test['pn'];
-		$ln = $test['ln'];
-		$fullname = $test['fullname'];
-		$father = $test['father'];
-		$mother = $test['mother'];
-		$birthplace = $test['birthplace'];
-		$bday = $test['bday'];
-		$bmonth = $test['bmonth'];
-		$byear = $test['byear'];
-		$conday = $test['conday'];
-		$conmonth = $test['conmonth'];
-		$conyear = $test['conyear'];
-		$godfather = $test['godfather'];
-		$godmother = $test['godmother'];
-		$presider = $test['presider'];
-		$purpose = $test['purpose'];
-		$priest = $test['priest'];
+		$id = $printCon['id'];
+		$bn = $printCon['bn'];
+		$pn = $printCon['pn'];
+		$ln = $printCon['ln'];
+		$fullname = $printCon['fullname'];
+		$father = $printCon['father'];
+		$mother = $printCon['mother'];
+		$birthplace = $printCon['birthplace'];
+		$birthdate = $printCon['birthdate'];
+		$condate = $printCon['condate'];
+		$godfather = $printCon['godfather'];
+		$godmother = $printCon['godmother'];
+		$presider = $printCon['presider'];
+		$purpose = $printCon['purpose'];
+		$priest = $printCon['priest'];
 
 ?>
 
@@ -76,7 +72,7 @@
 			<br><br><br><br><br>
 			<p align="center" style="font-family: century gothic; font-size: 30px;">Certificate of Confirmation</p>
 
-			<p align="center" style="font-family: century gothic;">This is to certify that</p><h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $bmonth;?> <?php echo $bday;?>, <?php echo $byear;?></b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $conmonth;?> <?php echo $conday;?>, <?php echo $conyear;?></b><br><br>the Holy Sacrament of Baptism which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
+			<p align="center" style="font-family: century gothic;">This is to certify that</p><h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $birthdate;?></b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $condate;?> </b><br><br>the Holy Sacrament of Baptism which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
 
 <br>
 		<center>
@@ -107,7 +103,7 @@
 
 				<tr>
 					<td>Date Issued:</td>
-					<td style="border-bottom: 1px solid black;" width="150"><center><?php echo $purpose;?></center></td>
+					<td style="border-bottom: 1px solid black;" width="150"><center><?php echo date('F d, Y'); ?></center></td>
 				</tr>
 
 				<tr>

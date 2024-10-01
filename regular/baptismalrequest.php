@@ -119,7 +119,7 @@ if (isset($_POST['delete'])) {
 				<h1 align="center">Baptismal Records</h1>
 				<div class="text-left">
 					<button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-target="#exampleModal">
-					<span class="btn-label"><i class="fa fa-plus"></i></span> Add Record</button>
+					<span class="btn-label"><i class="fa fa-plus"></i></span> Request Form</button>
 				</div>
 				
 				<!-- Add Modal -->

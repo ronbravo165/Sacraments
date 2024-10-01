@@ -64,6 +64,11 @@ while ($row = mysqli_fetch_array($result)) {
 			transition: .5s;
 		}
 
+		.div-center {
+			margin: auto;
+			width: 80%;
+			padding: 100px;
+		}
 	</style>
 
 </head>
@@ -106,7 +111,7 @@ while ($row = mysqli_fetch_array($result)) {
 		<div class="col py-3">
 			<div class="container">
 				<div class="clearfix">&nbsp;</div>
-				<div class="m-t-80">
+				<div class="div-center">
 					<div class="row">
 						<div class="col-lg-4">
 							<div class="card text-bg-warning mb-3 " style="max-width: 18rem;">
