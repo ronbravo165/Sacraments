@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_array($result)) {
 												);
 										} else if ($status == 1) {
 											print('<li class="list-inline-item">
-														<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewcon.php?id='.$conId.'"><i class="fa fa-print"></i></a>
+														<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewcom.php?id='.$conId.'"><i class="fa fa-print"></i></a>
 														</li>'
 													);
 										}

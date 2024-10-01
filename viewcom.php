@@ -10,31 +10,28 @@
 	$owner_id = $_REQUEST['id'];
 
 	$result = mysqli_query($con,"SELECT * from communion_tbl where id = '$owner_id'");
-	$test = mysqli_fetch_array($result);
+	$data = mysqli_fetch_array($result);
 
 	if (!$result) {
 		die("Error: Data not found.");
 	}
 
-		$id = $test['id'];
-		$bn = $test['bn'];
-		$pn = $test['pn'];
-		$ln = $test['ln'];
-		$fullname = $test['fullname'];
-		$father = $test['father'];
-		$mother = $test['mother'];
-		$birthplace = $test['birthplace'];
-		$bday = $test['bday'];
-		$bmonth = $test['bmonth'];
-		$byear = $test['byear'];
-		$comday = $test['comday'];
-		$commonth = $test['commonth'];
-		$comyear = $test['comyear'];
-		$godfather = $test['godfather'];
-		$godmother = $test['godmother'];
-		$presider = $test['presider'];
-		$purpose = $test['purpose'];
-		$priest = $test['priest'];
+		$id = $data['id'];
+		$bn = $data['bn'];
+		$pn = $data['pn'];
+		$ln = $data['ln'];
+		$fullname = $data['fullname'];
+		$father = $data['father'];
+		$mother = $data['mother'];
+		$birthplace = $data['birthplace'];
+		$bday = $data['birthdate'];
+		$communionDate = $data['comdate'];
+		$comtime = $data['comtime'];
+		$godfather = $data['godfather'];
+		$godmother = $data['godmother'];
+		$presider = $data['presider'];
+		$purpose = $data['purpose'];
+		$priest = $data['priest'];
 
 ?>
 
@@ -78,7 +75,7 @@
 
 			<p align="center" style="font-family: century gothic;">This is to certify that</p>
 
-<h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $bmonth;?> <?php echo $bday;?>, <?php echo $byear;?></b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $commonth;?> <?php echo $comday;?>, <?php echo $comyear;?></b><br><br>the Holy Sacrament of Communion which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
+<h2 align="center" style="font-family: century gothic; text-transform: uppercase;"><?php echo $fullname;?></h2><p align="center" style="font-family: century gothic;">child of <b><?php echo $father;?></b> and <b><?php echo $mother;?></b>, born in <br><b><?php echo $birthplace;?></b> on <b><?php echo $bday;?> </b><br><br>has received in the Catholic Church of <br><b>Parokya ni San Nicolas de Tolentino</b> on<br><b><?php echo $communionDate;?> <?php echo $comtime;?></b><br><br>the Holy Sacrament of Communion which administered by<br><b><?php echo $presider;?></b><br><br>the sponsors being</p>
 
 <br>
 		<center>
