@@ -55,6 +55,20 @@ if (!isset($_SESSION['id'])) {
 		echo '<script>alert("This request has been rejected!")</script>';
 		echo '<script>windows: location="requests.php"</script>';
 	}
+
+	if (isset($_POST['approveWed'])) {
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE wedding_tbl SET status = 1 where id = '$id'");
+		echo '<script>alert("This request has been approved!")</script>';
+		echo '<script>windows: location="requests.php"</script>';
+	}
+
+	if (isset($_POST['rejectWed'])) {
+		$id = $_POST['id'];
+		mysqli_query($con,"UPDATE wedding_tbl SET status = 2 where id = '$id'");
+		echo '<script>alert("This request has been rejected!")</script>';
+		echo '<script>windows: location="requests.php"</script>';
+	}
 ?>
 
 <!DOCTYPE html>
@@ -616,7 +630,172 @@ if (!isset($_SESSION['id'])) {
 							</div>
 						</div>
 						<div class="tab-pane fade" id="wedding">
-							<table id="example" class="table table-striped example" style="width:100%">
+							<ul class="nav nav-tabs" id="wedTab">
+								<li class="nav-item">
+									<a href="#pendingWed" class="nav-link active" data-bs-toggle="tab">Pending Requests</a>
+								</li>
+								<li class="nav-item">
+									<a href="#approvedWed" class="nav-link" data-bs-toggle="tab">Approved Requests</a>
+								</li>
+								<li class="nav-item">
+									<a href="#rejectedWed" class="nav-link" data-bs-toggle="tab">Rejected Requests</a>
+								</li>
+								
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="pendingWed">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+												<td>Groom's Name</td>
+												<td>Groom's Age</td>
+												<td>Bride's Name</td>
+												<td>Bride's Age</td>
+												<td>Wedding Date</td>
+												<td>Action</td>
+											</tr>
+										</thead>
+
+										<tbody>
+											<?php 
+											$result = mysqli_query($con,"SELECT * FROM wedding_tbl where status = 0 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+												<td><?php echo $row['groom']; ?></td>
+												<td><?php echo $row['groomage']; ?></td>
+												<td><?php echo $row['bride']; ?></td>
+												<td><?php echo $row['brideage']; ?></td>
+												<td><?php echo $row['wedday']; ?></td>
+											<td>
+												<?php
+													$requestorId = $row['registerId'];
+													$status = $row['status'];
+													$bapId = $row['id'];		
+													if ($requestorId != 0 && $status == 0) {
+														print('<li class="list-inline-item">
+																	<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveWedModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#approveWedModal"><i class="fa fa-check"></i></a>
+																</li>	
+																<li class="list-inline-item">
+																	<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectWedModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#rejectWedModal"><i class="fa fa-times"></i></a>
+																</li>'
+															);
+													}
+													
+												?>	
+											</td>
+											</tr>
+											<!-- Approve Modal -->
+											<div class="modal fade" id="approveWedModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form lass="modal-content animate" method="post">
+															<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+															<div class="modal-header">
+																<h5 class="modal-title" id="approveWedModal">Approval!</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																Are you sure you want to approve this request?
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+																<button type="submit" name="approveWed" class="btn btn-success">Yes</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											
+											<!-- Reject Modal -->
+											<div class="modal fade" id="rejectWedModal<?php echo $row['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<form lass="modal-content animate" method="post">
+															<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+															<div class="modal-header">
+																<h5 class="modal-title" id="rejectWedModal">Reject!</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																Are you sure you want to reject this request?
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+																<button type="submit" name="rejectWed" class="btn btn-success">Yes</button>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+								<div class="tab-pane fade " id="approvedWed">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+												<td>Groom's Name</td>
+												<td>Groom's Age</td>
+												<td>Bride's Name</td>
+												<td>Bride's Age</td>
+												<td>Wedding Date</td>
+											</tr>
+										</thead>
+
+										<tbody>
+											<?php
+											$result = mysqli_query($con,"SELECT * FROM wedding_tbl where status = 1 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+												<td><?php echo $row['groom']; ?></td>
+												<td><?php echo $row['groomage']; ?></td>
+												<td><?php echo $row['bride']; ?></td>
+												<td><?php echo $row['brideage']; ?></td>
+												<td><?php echo $row['wedday']; ?></td>
+											</tr>
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+								<div class="tab-pane fade" id="rejectedWed">
+									<div class="clearfix">&nbsp;</div>	
+									<table id="example" class="table table-striped example" style="width:100%">
+										<thead>
+											<tr>
+												<td>Groom's Name</td>
+												<td>Groom's Age</td>
+												<td>Bride's Name</td>
+												<td>Bride's Age</td>
+												<td>Wedding Date</td>
+											</tr>
+										</thead>
+
+										<tbody>
+											<?php 
+											$result = mysqli_query($con,"SELECT * FROM wedding_tbl where status = 2 AND registerId !=0 "); 
+											while ($row = $result->fetch_assoc()):
+											?>
+											<tr>
+												<td><?php echo $row['groom']; ?></td>
+												<td><?php echo $row['groomage']; ?></td>
+												<td><?php echo $row['bride']; ?></td>
+												<td><?php echo $row['brideage']; ?></td>
+												<td><?php echo $row['wedday']; ?></td>
+											</tr>
+											<?php endwhile; ?>
+										</tbody>
+
+									</table>
+								</div>
+							</div>
+							<!-- <table id="example" class="table table-striped example" style="width:100%">
 								<thead>
 									<tr>
 										<td>Husband</td>
@@ -641,7 +820,7 @@ if (!isset($_SESSION['id'])) {
 									<?php endwhile; ?>
 								</tbody>
 
-							</table>
+							</table> -->
 						</div>
 						<div class="tab-pane fade" id="deceased">
 							<table id="example" class="table table-striped example" style="width:100%">
