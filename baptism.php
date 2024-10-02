@@ -347,6 +347,7 @@ while ($row = mysqli_fetch_array($result)) {
 								<td>Baptismal Date</td>
 								<td>Baptismal Time</td>
 								<td>Priest</td>
+								<td>Status</td>
 								<td>Action</td>
 							</tr>
 						</thead>
@@ -366,19 +367,36 @@ while ($row = mysqli_fetch_array($result)) {
 								<td><?php echo $row['baptismalTime']; ?></td>
 								<td><?php echo $row['priest']; ?></td>
 								<td>
+									<?php
+										$status = $row['status'];
+
+										
+										if ($status == 0) {
+											echo '<span class="badge bg-info">For Approval</span>';
+										} else if ($status == 1) {
+											echo '<span class="badge bg-success">Approved</span>';
+										} else {
+											echo '<span class="badge bg-danger">Rejected</span>';
+										}
+									?>	
+								
+								</td>
+								<td>
 									<ul class="list-inline m-0">
-										<li class="list-inline-item">
-											<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-										</li>
-										<li class="list-inline-item">
-											<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-										</li>
+										
+										
 										<?php
 											$requestorId = $row['registerId'];
 											$status = $row['status'];
 											$bapId = $row['id'];		
-											if ($requestorId != 0 && $status == 0) {
+											if ($requestorId != 0 && ($status == 0 && $status != 1)) {
 												print('<li class="list-inline-item">
+															<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$bapId.'" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+														</li>
+														<li class="list-inline-item">
+															<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+														</li>
+														<li class="list-inline-item">
 															<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
 														</li>	
 														<li class="list-inline-item">
@@ -396,6 +414,7 @@ while ($row = mysqli_fetch_array($result)) {
 										
 									</ul>
 								</td>
+								
 							</tr>
 							
 							<!-- View Modal -->
