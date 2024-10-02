@@ -17,7 +17,6 @@ while ($row = mysqli_fetch_array($result)) {
 
 <?php
 	if (isset($_POST['add'])) {
-		include 'connection.php';
 			$bn = $_POST['bn'];
 			$pn = $_POST['pn'];
 			$ln = $_POST['ln'];
@@ -40,8 +39,51 @@ while ($row = mysqli_fetch_array($result)) {
 			echo '<script>windows: location="baptism.php"</script>';
 	}
 
+	if (isset($_POST['update'])) {
+		
+			$newDate = date("m/d/Y", strtotime($_POST['updateBirthDate'])); 
+			$newBaptismalDate = date("m/d/Y", strtotime($_POST['updateBaptismalDate']));
+			$id = $_POST['id'];
+			$bn = $_POST['bn'];
+			$pn = $_POST['pn'];
+			$ln = $_POST['ln'];
+			$fullname = $_POST['updateFullname'];
+			$father = $_POST['father'];
+			$mother = $_POST['mother'];
+			$birthplace = $_POST['birthPlace'];
+			$bday = $newDate;
+			$baptismalDate = $newBaptismalDate;
+			$baptime = $_POST['time'];
+			$godfather = $_POST['godfather'];
+			$godmother = $_POST['godmother'];
+			$presider = $_POST['presider'];
+			$purpose = $_POST['purpose'];
+			$priest = $_POST['priest'];
+			$status = 1;
+			mysqli_query($con,"UPDATE `baptism_tbl` SET 
+								`bn` = '$bn', 
+								`pn` = '$pn', 
+								`ln` = '$ln', 
+								`fullname` = '$fullname',
+								`father` = '$father',
+								`mother` = '$mother',
+								`birthplace` = '$birthplace',
+								`birthdate` = '$bday',
+								`baptismalDate` = '$baptismalDate',
+								`baptismalTime` = '$baptime',
+								`godfather` = '$godfather',
+								`godmother` = '$godmother',
+								`presider` = '$presider',
+								`purpose` = '$purpose',
+								`priest` = '$priest'
+								WHERE id='$id'"
+						);
+								
+			echo '<script>alert("Update has been saved!")</script>';
+			echo '<script>windows: location="baptism.php"</script>';
+	}
+
 	if (isset($_POST['delete'])) {
-		include 'connection.php';
 		$id = $_POST['id'];
 		mysqli_query($con,"DELETE from baptism_tbl where id='$id'");
 		echo '<script>alert("Deleted.")</script>';
@@ -49,7 +91,6 @@ while ($row = mysqli_fetch_array($result)) {
 	}
 
 	if (isset($_POST['approve'])) {
-		include 'connection.php';
 		$id = $_POST['id'];
 		mysqli_query($con,"UPDATE baptism_tbl SET status = 1 where id = '$id'");
 		echo '<script>alert("This request has been approved!")</script>';
@@ -57,7 +98,6 @@ while ($row = mysqli_fetch_array($result)) {
 	}
 
 	if (isset($_POST['reject'])) {
-		include 'connection.php';
 		$id = $_POST['id'];
 		mysqli_query($con,"UPDATE baptism_tbl SET status = 2 where id = '$id'");
 		echo '<script>alert("This request has been rejected!")</script>';
@@ -368,7 +408,7 @@ while ($row = mysqli_fetch_array($result)) {
 										</div>
 											<form class="modal-content animate" method="post">
 												<div class="modal-body">
-													
+													<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 													<div class="row">
 														<div class="col-md-4">
 															<div class="mb-3 row">
@@ -400,7 +440,7 @@ while ($row = mysqli_fetch_array($result)) {
 															<div class="mb-3 row">
 																<label for="staticEmail" class="col-sm-3 col-form-label">Full Name</label>
 																<div class="col-sm-9">
-																	<input type="text" name="fullname" class="form-control" id="fullname" value="<?php echo $row['fullname'] ?>">
+																	<input type="text" name="updateFullname" class="form-control" id="updateFullname" value="<?php echo $row['fullname'] ?>">
 																</div>
 															</div>
 														</div>
@@ -408,7 +448,11 @@ while ($row = mysqli_fetch_array($result)) {
 															<div class="mb-3 row">
 																<label for="staticEmail" class="col-sm-3 col-form-label">Birth Date</label>
 																<div class="col-sm-9">
-																<input type="text" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $row['birthdate'] ?>"></p>
+																<?php
+																	$date = $row['birthdate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $newDate ?>"></p>
 																</div>
 															</div>
 														</div>
@@ -447,7 +491,11 @@ while ($row = mysqli_fetch_array($result)) {
 															<div class="mb-3 row">
 																<label for="staticEmail" class="col-sm-3 col-form-label">Date of Baptismal</label>
 																<div class="col-sm-9">
-																<input type="text" name="baptismalDate" class="form-control" id="baptismalDate" value="<?php echo $row['baptismalDate'] ?>"></p>
+																<?php
+																	$date = $row['baptismalDate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="updateBaptismalDate" class="form-control" id="updateBaptismalDate" value="<?php echo $newDate ?>"></p>
 																</div>
 															</div>
 														</div>
@@ -511,7 +559,7 @@ while ($row = mysqli_fetch_array($result)) {
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-													<button type="submit" name="add" class="btn btn-primary">Update</button>
+													<button type="submit" name="update" class="btn btn-primary">Update</button>
 												</div>
 											</form>
 										
