@@ -79,7 +79,7 @@ while ($row = mysqli_fetch_array($result)) {
 								WHERE id='$id'"
 						);
 								
-			echo '<script>alert("Update has been saved!")</script>';
+			echo '<script>alert("Updates has been saved!")</script>';
 			echo '<script>windows: location="baptism.php"</script>';
 	}
 
