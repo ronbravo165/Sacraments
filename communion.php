@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_array($result)) {
 	if (isset($_POST['update'])) {
 		
 		$newDate = date("m/d/Y", strtotime($_POST['updateBirthDate'])); 
-		$newBaptismalDate = date("m/d/Y", strtotime($_POST['updateCommunionDate']));
+		$newCommuntionDate = date("m/d/Y", strtotime($_POST['updateCommunionDate']));
 		$id = $_POST['id'];
 		$bn = $_POST['bn'];
 		$pn = $_POST['pn'];
@@ -53,7 +53,7 @@ while ($row = mysqli_fetch_array($result)) {
 		$mother = $_POST['mother'];
 		$birthplace = $_POST['birthPlace'];
 		$bday = $newDate;
-		$comDate = $newBaptismalDate;
+		$comDate = $newCommuntionDate;
 		$comtime = $_POST['time'];
 		$godfather = $_POST['godfather'];
 		$godmother = $_POST['godmother'];
@@ -82,7 +82,7 @@ while ($row = mysqli_fetch_array($result)) {
 							
 		echo '<script>alert("Updates has been saved!")</script>';
 		echo '<script>windows: location="communion.php"</script>';
-}
+	}
 
 	if (isset($_POST['delete'])) {
 		$id = $_POST['id'];
@@ -101,7 +101,12 @@ while ($row = mysqli_fetch_array($result)) {
 
 	if (isset($_POST['reject'])) {
 		$id = $_POST['id'];
-		mysqli_query($con,"UPDATE communion_tbl SET status = 2 where id = '$id'");
+		$rejectReason = $_POST['rejectReason'];
+		mysqli_query($con,"UPDATE `communion_tbl` SET 
+								`rejectReason` = '$rejectReason', 
+								`status` = 2 
+								WHERE id='$id'"
+						);
 		echo '<script>alert("This request has been rejected!")</script>';
 		echo '<script>windows: location="communion.php"</script>';
 	}
@@ -350,6 +355,7 @@ while ($row = mysqli_fetch_array($result)) {
 							<td>Communion Time</td>
 							<td>Priest</td>
 							<td>Status</td>
+							<td>Rejection Reason</td>
 							<td>Action</td>
 						</tr>
 					</thead>
@@ -382,7 +388,8 @@ while ($row = mysqli_fetch_array($result)) {
 										}
 									?>	
 								
-								</td>
+							</td>
+							<td><?php echo $row['rejectReason']; ?></td>
 							<td>
 								<ul class="list-inline m-0">
 									
@@ -637,11 +644,14 @@ while ($row = mysqli_fetch_array($result)) {
 									<form lass="modal-content animate" method="post">
 										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 										<div class="modal-header">
-											<h5 class="modal-title" id="rejectModal">Reject!</h5>
+											<h5 class="modal-title" id="rejectModal">Are you sure you want to reject this request?</h5>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											Are you sure you want to reject this request?
+											Reason
+											<div class="col-sm-12">
+												<textarea style="width: 470px; height: 100px;" name="rejectReason" id="rejectReason"></textarea>
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>

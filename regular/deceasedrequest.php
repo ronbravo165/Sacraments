@@ -37,6 +37,43 @@ while ($row = mysqli_fetch_array($result)) {
 			echo '<script>windows: location="deceasedrequest.php"</script>';
 	}
 
+	if (isset($_POST['update'])) {
+		
+		$birthDate = date("m/d/Y", strtotime($_POST['birthDate'])); 
+		$deathDate = date("m/d/Y", strtotime($_POST['deathDate']));
+		$id = $_POST['id'];
+		$bn = $_POST['bn'];
+		$pn = $_POST['pn'];
+		$ln = $_POST['ln'];
+		$fullname = $_POST['fullname'];
+		$father = $_POST['father'];
+		$mother = $_POST['mother'];
+		$birthplace = $_POST['birthPlace'];
+		$birthDate = $birthDate;
+		$deathDate = $deathDate;
+		$presider = $_POST['presider'];
+		$caused = $_POST['caused'];
+		$priest = $_POST['priest'];
+		mysqli_query($con,"UPDATE `deceased_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`fullname` = '$fullname',
+							`father` = '$father',
+							`mother` = '$mother',
+							`birthplace` = '$birthplace',
+							`birthdate` = '$birthDate',
+							`decdate` = '$deathDate',
+							`presider` = '$presider',
+							`priest` = '$priest',
+							`caused` = '$caused'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
+		echo '<script>windows: location="deceasedrequest.php"</script>';
+	}
+
 	if (isset($_POST['delete'])) {
 		$id = $_POST['id'];
 		mysqli_query($con,"DELETE from deceased_tbl where id='$id'");
@@ -117,7 +154,10 @@ while ($row = mysqli_fetch_array($result)) {
 					<button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-target="#exampleModal">
 					<span class="btn-label"><i class="fa fa-plus"></i></span> Request Form</button>
 				</div>
-				
+				<div class="clear-fix">&nbsp;</div>
+				<div class="text-right">
+					<a href="home.php"  class="btn btn-outline-info btn-lg" style="font-family: century gothic; text-decoration: none; color: black;">BACK</a>
+				</div>
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
@@ -321,6 +361,7 @@ while ($row = mysqli_fetch_array($result)) {
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 									<form class="modal-content animate" method="post">
+										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 										<div class="modal-body">
 										
 										<div class="row">
@@ -362,7 +403,11 @@ while ($row = mysqli_fetch_array($result)) {
 												<div class="mb-3 row">
 													<label for="birthDate" class="col-sm-3 col-form-label">Birth Date</label>
 													<div class="col-sm-9">
-													<input type="text" name="birthDate" class="form-control" id="birthDate" value="<?php echo $row['birthdate'] ?>"></p>
+													<?php
+														$date = $row['birthdate'];
+														$newDate = date("Y-m-d", strtotime($date));
+													?>
+													<input type="date" name="birthDate" class="form-control" id="birthDate" value="<?php echo $newDate ?>"></p>
 													</div>
 												</div>
 											</div>
@@ -401,7 +446,11 @@ while ($row = mysqli_fetch_array($result)) {
 												<div class="mb-3 row">
 													<label for="deathDate" class="col-sm-3 col-form-label">Date of Death</label>
 													<div class="col-sm-9">
-													<input type="text" name="deathDate" class="form-control" id="deathDate" value="<?php echo $row['decdate'] ?>"></p>
+													<?php
+														$date = $row['decdate'];
+														$newDate = date("Y-m-d", strtotime($date));
+													?>
+													<input type="date" name="deathDate" class="form-control" id="deathDate" value="<?php echo $newDate ?>"></p>
 													</div>
 												</div>
 											</div>
@@ -437,7 +486,7 @@ while ($row = mysqli_fetch_array($result)) {
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-											<button type="submit" name="add" class="btn btn-primary">Update</button>
+											<button type="submit" name="update" class="btn btn-primary">Update</button>
 										</div>
 									</form>
 								

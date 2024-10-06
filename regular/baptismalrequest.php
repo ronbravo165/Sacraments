@@ -16,38 +16,82 @@ while ($row = mysqli_fetch_array($result)) {
 ?>
 
 <?php
-if (isset($_POST['add'])) {
-	include '../connection.php';
-		$registerId = $session;
+	if (isset($_POST['add'])) {
+		include '../connection.php';
+			$registerId = $session;
+			$bn = $_POST['bn'];
+			$pn = $_POST['pn'];
+			$ln = $_POST['ln'];
+			$fullname = $_POST['fullname'];
+			$father = $_POST['father'];
+			$mother = $_POST['mother'];
+			$birthplace = $_POST['birthPlace'];
+			$bday = $_POST['birthDate'];
+			$baptismalDate = $_POST['baptismalDate'];
+			$baptime = $_POST['time'];
+			$godfather = $_POST['godfather'];
+			$godmother = $_POST['godmother'];
+			$presider = $_POST['presider'];
+			$purpose = $_POST['purpose'];
+			$priest = $_POST['priest'];
+			$status = 0;
+			mysqli_query($con,"INSERT INTO baptism_tbl (registerId, bn, pn, ln, fullname, father, mother, birthplace, birthdate, baptismalDate, baptismalTime, godfather, godmother, presider, purpose, priest, status) VALUES ('$registerId', '$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$baptismalDate', '$baptime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
+
+			echo '<script>alert("Added successfully.")</script>';
+			echo '<script>windows: location="baptismalrequest.php"</script>';
+	}
+
+	if (isset($_POST['update'])) {
+		
+		$newDate = date("m/d/Y", strtotime($_POST['updateBirthDate'])); 
+		$newBaptismalDate = date("m/d/Y", strtotime($_POST['updateBaptismalDate']));
+		$id = $_POST['id'];
 		$bn = $_POST['bn'];
 		$pn = $_POST['pn'];
 		$ln = $_POST['ln'];
-		$fullname = $_POST['fullname'];
+		$fullname = $_POST['updateFullname'];
 		$father = $_POST['father'];
 		$mother = $_POST['mother'];
 		$birthplace = $_POST['birthPlace'];
-		$bday = $_POST['birthDate'];
-		$baptismalDate = $_POST['baptismalDate'];
+		$bday = $newDate;
+		$baptismalDate = $newBaptismalDate;
 		$baptime = $_POST['time'];
 		$godfather = $_POST['godfather'];
 		$godmother = $_POST['godmother'];
 		$presider = $_POST['presider'];
 		$purpose = $_POST['purpose'];
 		$priest = $_POST['priest'];
-		$status = 0;
-		mysqli_query($con,"INSERT INTO baptism_tbl (registerId, bn, pn, ln, fullname, father, mother, birthplace, birthdate, baptismalDate, baptismalTime, godfather, godmother, presider, purpose, priest, status) VALUES ('$registerId', '$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$baptismalDate', '$baptime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
-
-		echo '<script>alert("Added successfully.")</script>';
+		$status = 1;
+		mysqli_query($con,"UPDATE `baptism_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`fullname` = '$fullname',
+							`father` = '$father',
+							`mother` = '$mother',
+							`birthplace` = '$birthplace',
+							`birthdate` = '$bday',
+							`baptismalDate` = '$baptismalDate',
+							`baptismalTime` = '$baptime',
+							`godfather` = '$godfather',
+							`godmother` = '$godmother',
+							`presider` = '$presider',
+							`purpose` = '$purpose',
+							`priest` = '$priest'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
 		echo '<script>windows: location="baptismalrequest.php"</script>';
-}
+	}
 
-if (isset($_POST['delete'])) {
-	include '../connection.php';
-	$id = $_POST['id'];
-	mysqli_query($con,"DELETE from baptism_tbl where id='$id'");
-	echo '<script>alert("Deleted.")</script>';
-	echo '<script>windows: location="baptismalrequest.php"</script>';
-}
+	if (isset($_POST['delete'])) {
+		include '../connection.php';
+		$id = $_POST['id'];
+		mysqli_query($con,"DELETE from baptism_tbl where id='$id'");
+		echo '<script>alert("Deleted.")</script>';
+		echo '<script>windows: location="baptismalrequest.php"</script>';
+	}
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +165,10 @@ if (isset($_POST['delete'])) {
 					<button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-target="#exampleModal">
 					<span class="btn-label"><i class="fa fa-plus"></i></span> Request Form</button>
 				</div>
-				
+				<div class="clear-fix">&nbsp;</div>
+				<div class="text-right">
+					<a href="home.php"  class="btn btn-outline-info btn-lg" style="font-family: century gothic; text-decoration: none; color: black;">BACK</a>
+				</div>
 				<!-- Add Modal -->
 				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
@@ -359,7 +406,7 @@ if (isset($_POST['delete'])) {
 												</div>
 													<form class="modal-content animate" method="post">
 														<div class="modal-body">
-															
+															<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 															<div class="row">
 																<div class="col-md-4">
 																	<div class="mb-3 row">
@@ -391,7 +438,7 @@ if (isset($_POST['delete'])) {
 																	<div class="mb-3 row">
 																		<label for="staticEmail" class="col-sm-3 col-form-label">Full Name</label>
 																		<div class="col-sm-9">
-																			<input type="text" name="fullname" class="form-control" id="fullname" value="<?php echo $row['fullname'] ?>">
+																			<input type="text" name="updateFullname" class="form-control" id="updateFullname" value="<?php echo $row['fullname'] ?>">
 																		</div>
 																	</div>
 																</div>
@@ -399,7 +446,11 @@ if (isset($_POST['delete'])) {
 																	<div class="mb-3 row">
 																		<label for="staticEmail" class="col-sm-3 col-form-label">Birth Date</label>
 																		<div class="col-sm-9">
-																		<input type="text" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $row['birthdate'] ?>"></p>
+																		<?php
+																			$date = $row['birthdate'];
+																			$newDate = date("Y-m-d", strtotime($date));
+																		?>
+																		<input type="date" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $newDate ?>"></p>
 																		</div>
 																	</div>
 																</div>
@@ -438,7 +489,11 @@ if (isset($_POST['delete'])) {
 																	<div class="mb-3 row">
 																		<label for="staticEmail" class="col-sm-3 col-form-label">Date of Baptismal</label>
 																		<div class="col-sm-9">
-																		<input type="text" name="baptismalDate" class="form-control" id="baptismalDate" value="<?php echo $row['baptismalDate'] ?>"></p>
+																		<?php
+																			$date = $row['baptismalDate'];
+																			$newDate = date("Y-m-d", strtotime($date));
+																		?>
+																		<input type="date" name="updateBaptismalDate" class="form-control" id="updateBaptismalDate" value="<?php echo $newDate ?>"></p>
 																		</div>
 																	</div>
 																</div>
@@ -502,7 +557,7 @@ if (isset($_POST['delete'])) {
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-															<button type="submit" name="add" class="btn btn-primary">Update</button>
+															<button type="submit" name="update" class="btn btn-primary">Update</button>
 														</div>
 													</form>
 												

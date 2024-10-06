@@ -16,9 +16,36 @@ while ($row = mysqli_fetch_array($result)) {
 ?>
 
 <?php
-if (isset($_POST['add'])) {
-	include '../connection.php';
-		$registerId = $session;
+	if (isset($_POST['add'])) {
+		include '../connection.php';
+			$registerId = $session;
+			$bn = $_POST['bn'];
+			$pn = $_POST['pn'];
+			$ln = $_POST['ln'];
+			$fullname = $_POST['fullname'];
+			$father = $_POST['father'];
+			$mother = $_POST['mother'];
+			$birthplace = $_POST['birthPlace'];
+			$bday = $_POST['birthDate'];
+			$confirmationDate = $_POST['confirmationDate'];
+			$confirmationTime = $_POST['time'];
+			$godfather = $_POST['godfather'];
+			$godmother = $_POST['godmother'];
+			$presider = $_POST['presider'];
+			$purpose = $_POST['purpose'];
+			$priest = $_POST['priest'];
+			$status = 0;
+			mysqli_query($con,"INSERT INTO confirmation_tbl (registerId, bn, pn, ln, fullname, father, mother, birthplace, birthdate, condate, contime, godfather, godmother, presider, purpose, priest, status) VALUES ('$registerId', '$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$confirmationDate', '$confirmationTime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
+
+			echo '<script>alert("Added successfully.")</script>';
+			echo '<script>windows: location="confirmationrequest.php"</script>';
+	}
+
+	if (isset($_POST['update'])) {
+		
+		$newDate = date("m/d/Y", strtotime($_POST['updateBirthDate'])); 
+		$newConfirmationDate = date("m/d/Y", strtotime($_POST['updateConfirmationDate']));
+		$id = $_POST['id'];
 		$bn = $_POST['bn'];
 		$pn = $_POST['pn'];
 		$ln = $_POST['ln'];
@@ -26,28 +53,45 @@ if (isset($_POST['add'])) {
 		$father = $_POST['father'];
 		$mother = $_POST['mother'];
 		$birthplace = $_POST['birthPlace'];
-		$bday = $_POST['birthDate'];
-		$confirmationDate = $_POST['confirmationDate'];
-		$confirmationTime = $_POST['time'];
+		$bday = $newDate;
+		$conDate = $newConfirmationDate;
+		$contime = $_POST['time'];
 		$godfather = $_POST['godfather'];
 		$godmother = $_POST['godmother'];
 		$presider = $_POST['presider'];
 		$purpose = $_POST['purpose'];
 		$priest = $_POST['priest'];
-		$status = 0;
-		mysqli_query($con,"INSERT INTO confirmation_tbl (registerId, bn, pn, ln, fullname, father, mother, birthplace, birthdate, condate, contime, godfather, godmother, presider, purpose, priest, status) VALUES ('$registerId', '$bn', '$pn', '$ln', '$fullname', '$father', '$mother', '$birthplace', '$bday', '$confirmationDate', '$confirmationTime', '$godfather', '$godmother', '$presider', '$purpose', '$priest', '$status')");
-
-		echo '<script>alert("Added successfully.")</script>';
+		$status = 1;
+		mysqli_query($con,"UPDATE `confirmation_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`fullname` = '$fullname',
+							`father` = '$father',
+							`mother` = '$mother',
+							`birthplace` = '$birthplace',
+							`birthdate` = '$bday',
+							`conDate` = '$conDate',
+							`contime` = '$contime',
+							`godfather` = '$godfather',
+							`godmother` = '$godmother',
+							`presider` = '$presider',
+							`purpose` = '$purpose',
+							`priest` = '$priest'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
 		echo '<script>windows: location="confirmationrequest.php"</script>';
-}
+	}
 
-if (isset($_POST['delete'])) {
-	include '../connection.php';
-	$id = $_POST['id'];
-	mysqli_query($con,"DELETE from confirmation_tbl where id='$id'");
-	echo '<script>alert("Deleted.")</script>';
-	echo '<script>windows: location="confirmationrequest.php"</script>';
-}
+	if (isset($_POST['delete'])) {
+		include '../connection.php';
+		$id = $_POST['id'];
+		mysqli_query($con,"DELETE from confirmation_tbl where id='$id'");
+		echo '<script>alert("Deleted.")</script>';
+		echo '<script>windows: location="confirmationrequest.php"</script>';
+	}
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +165,10 @@ if (isset($_POST['delete'])) {
 					<button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-target="#exampleModal">
 					<span class="btn-label"><i class="fa fa-plus"></i></span> Request Form</button>
 				</div>
-				
+				<div class="clear-fix">&nbsp;</div>
+				<div class="text-right">
+					<a href="home.php"  class="btn btn-outline-info btn-lg" style="font-family: century gothic; text-decoration: none; color: black;">BACK</a>
+				</div>
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
@@ -335,7 +382,7 @@ if (isset($_POST['delete'])) {
 									$conId = $row['id'];
 									if ($status == 0) {
 										print('<li class="list-inline-item">
-													<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$conId.'>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+													<button class="btn btn-success btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$conId.'" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
 												</li>
 												<li class="list-inline-item">
 													<a class="btn btn-danger btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$conId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
@@ -351,10 +398,11 @@ if (isset($_POST['delete'])) {
 							<div class="modal-dialog modal-xl">
 								<div class="modal-content" >
 									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="updateModalLabel">Baptismal Form </h1>
+										<h1 class="modal-title fs-5" id="updateModalLabel">Confirmation Form </h1>
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 										<form class="modal-content animate" method="post">
+											<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 											<div class="modal-body">
 												
 												<div class="row">
@@ -396,7 +444,11 @@ if (isset($_POST['delete'])) {
 														<div class="mb-3 row">
 															<label for="staticEmail" class="col-sm-3 col-form-label">Birth Date</label>
 															<div class="col-sm-9">
-															<input type="text" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $row['birthdate'] ?>"></p>
+															<?php
+																$date = $row['birthdate'];
+																$newDate = date("Y-m-d", strtotime($date));
+															?>
+															<input type="date" name="updateBirthDate" class="form-control" id="updateBirthDate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -435,8 +487,12 @@ if (isset($_POST['delete'])) {
 														<div class="mb-3 row">
 															<label for="staticEmail" class="col-sm-3 col-form-label">Date of Confirmation</label>
 															<div class="col-sm-9">
-															<input type="text" name="confirmationDate" class="form-control" id="confirmationDate" value="<?php echo $row['condate'] ?>"></p>
-															</div>
+															<?php
+																$date = $row['condate'];
+																$newDate = date("Y-m-d", strtotime($date));
+															?>
+															<input type="date" name="updateConfirmationDate" class="form-control" id="updateConfirmationDate" value="<?php echo $newDate ?>"></p>
+														</div>
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -499,7 +555,7 @@ if (isset($_POST['delete'])) {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-												<button type="submit" name="add" class="btn btn-primary">Update</button>
+												<button type="submit" name="update" class="btn btn-primary">Update</button>
 											</div>
 										</form>
 									

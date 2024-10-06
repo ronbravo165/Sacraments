@@ -45,6 +45,58 @@ while ($row = mysqli_fetch_array($result)) {
 		echo '<script>windows: location="weddingrequest.php"</script>';
 	}
 
+	if (isset($_POST['update'])) {
+		
+		$groombirthdate = date("m/d/Y", strtotime($_POST['groombirthdate'])); 
+		$bridebirthdate = date("m/d/Y", strtotime($_POST['bridebirthdate']));
+		$weddingdate = date("m/d/Y", strtotime($_POST['weddingdate']));
+		$id = $_POST['id'];
+		$bn = $_POST['bn'];
+		$pn = $_POST['pn'];
+		$ln = $_POST['ln'];
+		$groom = $_POST['groomfullname'];
+		$groomage = $_POST['groomage'];
+		$groombday = $groombirthdate;
+		$groomfather = $_POST['groomfather'];
+		$groommother = $_POST['groommother'];
+		$groomaddress = $_POST['groomaddress'];
+		$bride = $_POST['bridefullname'];
+		$brideage = $_POST['brideage'];
+		$bridebday = $bridebirthdate;
+		$bridefather = $_POST['bridefather'];
+		$bridemother = $_POST['bridemother'];
+		$brideaddress = $_POST['brideaddress'];
+		$godfather = $_POST['godfather'];
+		$godmother = $_POST['godmother'];
+		$wedday = $weddingdate;
+		$presider = $_POST['presider'];
+		mysqli_query($con,"UPDATE `wedding_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`groom` = '$groom',
+							`groomage` = '$groomage',
+							`groombirthdate` = '$groombday',
+							`groomfather` = '$groomfather',
+							`groommother` = '$groommother',
+							`groomaddress` = '$groomaddress',
+							`bride` = '$bride',
+							`brideage` = '$brideage',
+							`bridebirthdate` = '$bridebday',
+							`bridefather` = '$bridefather',
+							`bridemother` = '$bridemother',
+							`brideaddress` = '$brideaddress',
+							`godfather` = '$godfather',
+							`godmother` = '$godmother',
+							`wedday` = '$wedday',
+							`presider` = '$presider'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
+		echo '<script>windows: location="weddingrequest.php"</script>';
+	}
+
 	if (isset($_POST['delete'])) {
 		$id = $_POST['id'];
 		mysqli_query($con,"DELETE from wedding_tbl where id='$id'");
@@ -125,7 +177,10 @@ while ($row = mysqli_fetch_array($result)) {
 					<button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-target="#exampleModal">
 					<span class="btn-label"><i class="fa fa-plus"></i></span> Request Form</button>
 				</div>
-				
+				<div class="clear-fix">&nbsp;</div>
+				<div class="text-right">
+					<a href="home.php"  class="btn btn-outline-info btn-lg" style="font-family: century gothic; text-decoration: none; color: black;">BACK</a>
+				</div>
 				<!-- Modal -->
 				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-xl">
@@ -407,6 +462,7 @@ while ($row = mysqli_fetch_array($result)) {
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 										<form class="modal-content animate" method="post">
+											<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 											<div class="modal-body">
 											
 												<div class="row">
@@ -461,7 +517,11 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="groombirthdate" class="col-sm-2 col-form-label">Birthdate:</label>
 															<div class="col-sm-10">
-															<input type="text" name="groombirthdate" class="form-control" id="groombirthdate" value="<?php echo $row['groombirthdate'] ?>"></p>
+																<?php
+																	$date = $row['groombirthdate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="groombirthdate" class="form-control" id="groombirthdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -519,7 +579,11 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="bridebirthdate" class="col-sm-2 col-form-label">Birthdate:</label>
 															<div class="col-sm-10">
-															<input type="text" name="bridebirthdate" class="form-control" id="bridebirthdate" value="<?php echo $row['bridebirthdate'] ?>"></p>
+																<?php
+																	$date = $row['bridebirthdate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="bridebirthdate" class="form-control" id="bridebirthdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -559,13 +623,17 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="weddingdate" class="col-sm-2 col-form-label">Date of Wedding:</label>
 															<div class="col-sm-10">
-															<input type="text" name="weddingdate" class="form-control" id="weddingdate" value="<?php echo $row['wedday'] ?>"></p>
+															<?php
+																$date = $row['wedday'];
+																$newDate = date("Y-m-d", strtotime($date));
+															?>
+															<input type="date" name="weddingdate" class="form-control" id="weddingdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="mb-3 row">
-															<label for="presider" class="col-sm-2 col-form-label">Presider:</label>
+															<label for="presider" class="col-sm-2 col-form-label">Priest:</label>
 															<div class="col-sm-10">
 																<input type="text" name="presider" class="form-control" id="presider" value="<?php echo $row['presider'] ?>">
 															</div>
@@ -595,7 +663,7 @@ while ($row = mysqli_fetch_array($result)) {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-												<button type="submit" name="add" class="btn btn-primary">Update</button>
+												<button type="submit" name="update" class="btn btn-primary">Update</button>
 											</div>
 										</form>
 									

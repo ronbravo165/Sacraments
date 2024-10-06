@@ -36,6 +36,43 @@ while ($row = mysqli_fetch_array($result)) {
 			echo '<script>windows: location="deceased.php"</script>';
 	}
 
+	if (isset($_POST['update'])) {
+		
+		$birthDate = date("m/d/Y", strtotime($_POST['birthDate'])); 
+		$deathDate = date("m/d/Y", strtotime($_POST['deathDate']));
+		$id = $_POST['id'];
+		$bn = $_POST['bn'];
+		$pn = $_POST['pn'];
+		$ln = $_POST['ln'];
+		$fullname = $_POST['fullname'];
+		$father = $_POST['father'];
+		$mother = $_POST['mother'];
+		$birthplace = $_POST['birthPlace'];
+		$birthDate = $birthDate;
+		$deathDate = $deathDate;
+		$presider = $_POST['presider'];
+		$caused = $_POST['caused'];
+		$priest = $_POST['priest'];
+		mysqli_query($con,"UPDATE `deceased_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`fullname` = '$fullname',
+							`father` = '$father',
+							`mother` = '$mother',
+							`birthplace` = '$birthplace',
+							`birthdate` = '$birthDate',
+							`decdate` = '$deathDate',
+							`presider` = '$presider',
+							`priest` = '$priest',
+							`caused` = '$caused'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
+		echo '<script>windows: location="deceased.php"</script>';
+	}
+
 	if (isset($_POST['delete'])) {
 		$id = $_POST['id'];
 		mysqli_query($con,"DELETE from deceased_tbl where id='$id'");
@@ -53,7 +90,12 @@ while ($row = mysqli_fetch_array($result)) {
 
 	if (isset($_POST['reject'])) {
 		$id = $_POST['id'];
-		mysqli_query($con,"UPDATE deceased_tbl SET status = 2 where id = '$id'");
+		$rejectReason = $_POST['rejectReason'];
+		mysqli_query($con,"UPDATE `deceased_tbl` SET 
+								`rejectReason` = '$rejectReason', 
+								`status` = 2 
+								WHERE id='$id'"
+						);
 		echo '<script>alert("This request has been rejected!")</script>';
 		echo '<script>windows: location="deceased.php"</script>';
 	}
@@ -270,6 +312,8 @@ while ($row = mysqli_fetch_array($result)) {
 							<td>Deceased Date</td>
 							<td>Caused of Death</td>
 							<td>Priest</td>
+							<td>Status</td>
+							<td>Rejection Reason</td>
 							<td>Action</td>
 						</tr>
 					</thead>
@@ -287,19 +331,37 @@ while ($row = mysqli_fetch_array($result)) {
 							<td><?php echo $row['caused']; ?></td>
 							<td><?php echo $row['priest']; ?></td>
 							<td>
+									<?php
+										$status = $row['status'];
+
+										
+										if ($status == 0) {
+											echo '<span class="badge bg-info">For Approval</span>';
+										} else if ($status == 1) {
+											echo '<span class="badge bg-success">Approved</span>';
+										} else {
+											echo '<span class="badge bg-danger">Rejected</span>';
+										}
+									?>	
+								
+							</td>
+							<td><?php echo $row['rejectReason']; ?></td>
+							<td>
 								<ul class="list-inline m-0">
-									<li class="list-inline-item">
-										<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-									</li>
-									<li class="list-inline-item">
-										<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-									</li>
+									
+									
 									<?php
 										$requestorId = $row['registerId'];
 										$status = $row['status'];
 										$bapId = $row['id'];		
-										if ($requestorId != 0 && $status == 0) {
+										if ($requestorId != 0 && ($status == 0 && $status != 1)) {
 											print('<li class="list-inline-item">
+														<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$bapId.'" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+													</li>
+													<li class="list-inline-item">
+														<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+													</li>
+													<li class="list-inline-item">
 														<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
 													</li>	
 													<li class="list-inline-item">
@@ -308,7 +370,7 @@ while ($row = mysqli_fetch_array($result)) {
 												);
 										} else if ($status == 1) {
 											print('<li class="list-inline-item">
-													<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewdec.php?id='.$bapId.'"><i class="fa fa-print"></i></a>
+													<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewbap.php?id='.$bapId.'"><i class="fa fa-print"></i></a>
 													</li>'
 												);
 										}
@@ -328,6 +390,7 @@ while ($row = mysqli_fetch_array($result)) {
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								</div>
 									<form class="modal-content animate" method="post">
+										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 										<div class="modal-body">
 										
 										<div class="row">
@@ -369,7 +432,11 @@ while ($row = mysqli_fetch_array($result)) {
 												<div class="mb-3 row">
 													<label for="birthDate" class="col-sm-3 col-form-label">Birth Date</label>
 													<div class="col-sm-9">
-													<input type="text" name="birthDate" class="form-control" id="birthDate" value="<?php echo $row['birthdate'] ?>"></p>
+													<?php
+														$date = $row['birthdate'];
+														$newDate = date("Y-m-d", strtotime($date));
+													?>
+													<input type="date" name="birthDate" class="form-control" id="birthDate" value="<?php echo $newDate ?>"></p>
 													</div>
 												</div>
 											</div>
@@ -408,7 +475,11 @@ while ($row = mysqli_fetch_array($result)) {
 												<div class="mb-3 row">
 													<label for="deathDate" class="col-sm-3 col-form-label">Date of Death</label>
 													<div class="col-sm-9">
-													<input type="text" name="deathDate" class="form-control" id="deathDate" value="<?php echo $row['decdate'] ?>"></p>
+													<?php
+														$date = $row['decdate'];
+														$newDate = date("Y-m-d", strtotime($date));
+													?>
+													<input type="date" name="deathDate" class="form-control" id="deathDate" value="<?php echo $newDate ?>"></p>
 													</div>
 												</div>
 											</div>
@@ -444,7 +515,7 @@ while ($row = mysqli_fetch_array($result)) {
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-											<button type="submit" name="add" class="btn btn-primary">Update</button>
+											<button type="submit" name="update" class="btn btn-primary">Update</button>
 										</div>
 									</form>
 								
@@ -503,11 +574,14 @@ while ($row = mysqli_fetch_array($result)) {
 									<form lass="modal-content animate" method="post">
 										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 										<div class="modal-header">
-											<h5 class="modal-title" id="rejectModal">Reject!</h5>
+											<h5 class="modal-title" id="rejectModal">Are you sure you want to reject this request?</h5>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											Are you sure you want to reject this request?
+											Reason
+											<div class="col-sm-12">
+												<textarea style="width: 470px; height: 100px;" name="rejectReason" id="rejectReason"></textarea>
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>

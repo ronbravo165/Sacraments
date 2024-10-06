@@ -45,6 +45,58 @@ while ($row = mysqli_fetch_array($result)) {
 			echo '<script>windows: location="wedding.php"</script>';
 	}
 
+	if (isset($_POST['update'])) {
+		
+		$groombirthdate = date("m/d/Y", strtotime($_POST['groombirthdate'])); 
+		$bridebirthdate = date("m/d/Y", strtotime($_POST['bridebirthdate']));
+		$weddingdate = date("m/d/Y", strtotime($_POST['weddingdate']));
+		$id = $_POST['id'];
+		$bn = $_POST['bn'];
+		$pn = $_POST['pn'];
+		$ln = $_POST['ln'];
+		$groom = $_POST['groomfullname'];
+		$groomage = $_POST['groomage'];
+		$groombday = $groombirthdate;
+		$groomfather = $_POST['groomfather'];
+		$groommother = $_POST['groommother'];
+		$groomaddress = $_POST['groomaddress'];
+		$bride = $_POST['bridefullname'];
+		$brideage = $_POST['brideage'];
+		$bridebday = $bridebirthdate;
+		$bridefather = $_POST['bridefather'];
+		$bridemother = $_POST['bridemother'];
+		$brideaddress = $_POST['brideaddress'];
+		$godfather = $_POST['godfather'];
+		$godmother = $_POST['godmother'];
+		$wedday = $weddingdate;
+		$presider = $_POST['presider'];
+		mysqli_query($con,"UPDATE `wedding_tbl` SET 
+							`bn` = '$bn', 
+							`pn` = '$pn', 
+							`ln` = '$ln', 
+							`groom` = '$groom',
+							`groomage` = '$groomage',
+							`groombirthdate` = '$groombday',
+							`groomfather` = '$groomfather',
+							`groommother` = '$groommother',
+							`groomaddress` = '$groomaddress',
+							`bride` = '$bride',
+							`brideage` = '$brideage',
+							`bridebirthdate` = '$bridebday',
+							`bridefather` = '$bridefather',
+							`bridemother` = '$bridemother',
+							`brideaddress` = '$brideaddress',
+							`godfather` = '$godfather',
+							`godmother` = '$godmother',
+							`wedday` = '$wedday',
+							`presider` = '$presider'
+							WHERE id='$id'"
+					);
+							
+		echo '<script>alert("Updates has been saved!")</script>';
+		echo '<script>windows: location="wedding.php"</script>';
+	}
+
 	if (isset($_POST['delete'])) {
 		include 'connection.php';
 		$id = $_POST['id'];
@@ -63,7 +115,12 @@ while ($row = mysqli_fetch_array($result)) {
 
 	if (isset($_POST['reject'])) {
 		$id = $_POST['id'];
-		mysqli_query($con,"UPDATE wedding_tbl SET status = 2 where id = '$id'");
+		$rejectReason = $_POST['rejectReason'];
+		mysqli_query($con,"UPDATE `wedding_tbl` SET 
+								`rejectReason` = '$rejectReason', 
+								`status` = 2 
+								WHERE id='$id'"
+						);
 		echo '<script>alert("This request has been rejected!")</script>';
 		echo '<script>windows: location="wedding.php"</script>';
 	}
@@ -354,6 +411,8 @@ while ($row = mysqli_fetch_array($result)) {
 							<td>Bride's Birthdate</td>
 							<td>Bride's Address</td>
 							<td>Wedding Date</td>
+							<td>Status</td>
+							<td>Rejection Reason</td>
 							<td>Action</td>
 						</tr>
 					</thead>
@@ -374,33 +433,52 @@ while ($row = mysqli_fetch_array($result)) {
 							<td><?php echo $row['brideaddress']; ?></td>
 							<td><?php echo $row['wedday']; ?></td>
 							<td>
+									<?php
+										$status = $row['status'];
+
+										
+										if ($status == 0) {
+											echo '<span class="badge bg-info">For Approval</span>';
+										} else if ($status == 1) {
+											echo '<span class="badge bg-success">Approved</span>';
+										} else {
+											echo '<span class="badge bg-danger">Rejected</span>';
+										}
+									?>	
+								
+							</td>
+							<td><?php echo $row['rejectReason']; ?></td>
+							<td>
 								<ul class="list-inline m-0">
-									<li class="list-inline-item">
-										<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal<?php echo $row['id']; ?>" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
-									</li>
-									<li class="list-inline-item">
-										<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
-									</li>
+									
+									
 									<?php
 										$requestorId = $row['registerId'];
 										$status = $row['status'];
-										$conId = $row['id'];		
-										if ($requestorId != 0 && $status == 0) {
+										$bapId = $row['id'];		
+										if ($requestorId != 0 && ($status == 0 && $status != 1)) {
 											print('<li class="list-inline-item">
-														<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$conId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
+														<button class="btn btn-info btn-sm rounded-0" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#updateModal'.$bapId.'" data-bs-target="#updateModal"><i class="fa fa-edit"></i></button>
+													</li>
+													<li class="list-inline-item">
+														<a class="btn btn-warning btn-sm rounded-0 delete_baptism" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#deleteModal"><i class="fa fa-trash"></i></a>
+													</li>
+													<li class="list-inline-item">
+														<a class="btn btn-success btn-sm rounded-0 approve_baptism" title="Approve" data-bs-toggle="modal" data-bs-target="#approveModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#approveModal"><i class="fa fa-check"></i></a>
 													</li>	
 													<li class="list-inline-item">
-														<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectModal'.$conId.'" href="javascript:void(0)" data-bs-target="#rejectModal"><i class="fa fa-times"></i></a>
+														<a class="btn btn-danger btn-sm rounded-0 reject_baptism" title="Reject" data-bs-toggle="modal" data-bs-target="#rejectModal'.$bapId.'" href="javascript:void(0)" data-bs-target="#rejectModal"><i class="fa fa-times"></i></a>
 													</li>'
 												);
 										} else if ($status == 1) {
 											print('<li class="list-inline-item">
-														<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewwed.php?id='.$conId.'"><i class="fa fa-print"></i></a>
-														</li>'
-													);
+													<a class="btn btn-dark btn-sm rounded-0 print_baptism" title="Print" href="viewbap.php?id='.$bapId.'"><i class="fa fa-print"></i></a>
+													</li>'
+												);
 										}
 											
-									?>			
+									?>		
+									
 								</ul>
 							</td>
 						</tr>
@@ -414,6 +492,7 @@ while ($row = mysqli_fetch_array($result)) {
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 										<form class="modal-content animate" method="post">
+											<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 											<div class="modal-body">
 											
 												<div class="row">
@@ -468,7 +547,11 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="groombirthdate" class="col-sm-2 col-form-label">Birthdate:</label>
 															<div class="col-sm-10">
-															<input type="text" name="groombirthdate" class="form-control" id="groombirthdate" value="<?php echo $row['groombirthdate'] ?>"></p>
+																<?php
+																	$date = $row['groombirthdate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="groombirthdate" class="form-control" id="groombirthdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -526,7 +609,11 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="bridebirthdate" class="col-sm-2 col-form-label">Birthdate:</label>
 															<div class="col-sm-10">
-															<input type="text" name="bridebirthdate" class="form-control" id="bridebirthdate" value="<?php echo $row['bridebirthdate'] ?>"></p>
+																<?php
+																	$date = $row['bridebirthdate'];
+																	$newDate = date("Y-m-d", strtotime($date));
+																?>
+																<input type="date" name="bridebirthdate" class="form-control" id="bridebirthdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -566,7 +653,11 @@ while ($row = mysqli_fetch_array($result)) {
 														<div class="mb-3 row">
 															<label for="weddingdate" class="col-sm-2 col-form-label">Date of Wedding:</label>
 															<div class="col-sm-10">
-															<input type="text" name="weddingdate" class="form-control" id="weddingdate" value="<?php echo $row['wedday'] ?>"></p>
+															<?php
+																$date = $row['wedday'];
+																$newDate = date("Y-m-d", strtotime($date));
+															?>
+															<input type="date" name="weddingdate" class="form-control" id="weddingdate" value="<?php echo $newDate ?>"></p>
 															</div>
 														</div>
 													</div>
@@ -602,7 +693,7 @@ while ($row = mysqli_fetch_array($result)) {
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-												<button type="submit" name="add" class="btn btn-primary">Update</button>
+												<button type="submit" name="update" class="btn btn-primary">Update</button>
 											</div>
 										</form>
 									
@@ -661,11 +752,14 @@ while ($row = mysqli_fetch_array($result)) {
 									<form lass="modal-content animate" method="post">
 										<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 										<div class="modal-header">
-											<h5 class="modal-title" id="rejectModal">Reject!</h5>
+											<h5 class="modal-title" id="rejectModal">Are you sure you want to reject this request?</h5>
 											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">
-											Are you sure you want to reject this request?
+											Reason
+											<div class="col-sm-12">
+												<textarea style="width: 470px; height: 100px;" name="rejectReason" id="rejectReason"></textarea>
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
