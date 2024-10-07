@@ -758,7 +758,7 @@ while ($row = mysqli_fetch_array($result)) {
 										<div class="modal-body">
 											Reason
 											<div class="col-sm-12">
-												<textarea style="width: 470px; height: 100px;" name="rejectReason" id="rejectReason"></textarea>
+												<textarea style="width: 470px; height: 100px;" name="rejectReason" id="rejectReason" required></textarea>
 											</div>
 										</div>
 										<div class="modal-footer">
